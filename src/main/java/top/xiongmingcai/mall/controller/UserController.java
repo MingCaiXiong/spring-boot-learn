@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import top.xiongmingcai.mall.common.ApiRestResponse;
-import top.xiongmingcai.mall.exception.BussinessException;
 import top.xiongmingcai.mall.exception.ExceptionEnum;
 import top.xiongmingcai.mall.model.pojo.User;
 import top.xiongmingcai.mall.service.UserService;
@@ -37,12 +36,7 @@ public class UserController {
             return ApiRestResponse.error(ExceptionEnum.NEED__LESS_THAN_8_BITS);
         }
 
-        try {
-            User register = userService.register(username, password);
-        } catch (BussinessException ex) {
-            ex.printStackTrace();
-            return ApiRestResponse.error(ex.getCode(), ex.getMsg());
-        }
+        User register = userService.register(username, password);
 
         return ApiRestResponse.success();
 

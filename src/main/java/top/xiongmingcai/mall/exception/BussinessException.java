@@ -7,10 +7,10 @@ public class BussinessException extends RuntimeException {
     private Integer code;
     private String msg;
 
-    public BussinessException(Integer code, String message) {
-        super(message);
+    public BussinessException(Integer code, String msg) {
+        super(msg);
         this.code = code;
-        this.msg = message;
+        this.msg = msg;
     }
 
     public BussinessException(ExceptionEnum ex) {

@@ -9,7 +9,8 @@ public enum ExceptionEnum {
     NEED_PASSWORD(10003, "密码不能为空"),
     NEED_DO_NOT_ALLOW_DUPLICATE_NAMES(10004,
             "不允许重名, 注册失败"),
-    USER_CREATION_FAILED(10005, "用户入库失败");
+    USER_CREATION_FAILED(10005, "用户入库失败"),
+    SYSTEM_ABNORMAL(20000, "系统异常");
     private Integer code;
     private String msg;
 
