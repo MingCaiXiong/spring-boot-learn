@@ -5,7 +5,8 @@ package top.xiongmingcai.mall.exception;
  */
 public enum ExceptionEnum {
     NEED_USER_NAME(10001, "用户名不能为空"),
-    NEED_PASSWORD(10003, "密码不能为空");
+    NEED_PASSWORD(10003, "密码不能为空"),
+    need_doNotAllowDuplicateNames(10004, "不允许重名, 注册失败");
     private Integer code;
     private String msg;
 

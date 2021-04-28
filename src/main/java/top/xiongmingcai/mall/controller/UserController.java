@@ -36,7 +36,15 @@ public class UserController {
             return ApiRestResponse.error(1004, "密码不能少于8位");
         }
 
+        try {
+            User register = userService.register(username, password);
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+            return ApiRestResponse.error(10034, "注册服务异常");
+        }
+
         return ApiRestResponse.success();
+
     }
 }
 

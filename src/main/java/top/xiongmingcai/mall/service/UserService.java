@@ -5,5 +5,5 @@ import top.xiongmingcai.mall.model.pojo.User;
 public interface UserService {
     User getUser();
 
-    User register();
+    User register(String username, String password);
 }

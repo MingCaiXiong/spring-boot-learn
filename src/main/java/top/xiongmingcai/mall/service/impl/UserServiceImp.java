@@ -1,6 +1,8 @@
 package top.xiongmingcai.mall.service.impl;
 
 import org.springframework.stereotype.Service;
+import top.xiongmingcai.mall.exception.BussinessException;
+import top.xiongmingcai.mall.exception.ExceptionEnum;
 import top.xiongmingcai.mall.model.dao.UserMapper;
 import top.xiongmingcai.mall.model.pojo.User;
 import top.xiongmingcai.mall.service.UserService;
@@ -18,8 +20,21 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User register() {
-        return null;
+    public User register(String username, String password) {
+        //查询用户名是否存在,不允许重名
+        User result = userMapper.selectByUsername(username);
+        if (result != null) {
+            throw new BussinessException(ExceptionEnum.need_doNotAllowDuplicateNames);
+        }
+
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        int count = userMapper.insertSelective(user);
+        if (count == 0) {
+            throw new BussinessException(100004, "创建用户失败");
+        }
+        return user;
     }
 }
 
