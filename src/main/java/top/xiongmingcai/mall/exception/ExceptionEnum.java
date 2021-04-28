@@ -4,7 +4,8 @@ package top.xiongmingcai.mall.exception;
  * 异常枚举
  */
 public enum ExceptionEnum {
-    NEED_USER_NAME(10001, "用户名不能为空");
+    NEED_USER_NAME(10001, "用户名不能为空"),
+    NEED_PASSWORD(10003, "密码不能为空");
     private Integer code;
     private String msg;
 

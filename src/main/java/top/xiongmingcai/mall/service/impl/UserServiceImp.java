@@ -16,5 +16,10 @@ public class UserServiceImp implements UserService {
     public User getUser() {
         return userMapper.selectByPrimaryKey(1);
     }
+
+    @Override
+    public User register() {
+        return null;
+    }
 }
 
