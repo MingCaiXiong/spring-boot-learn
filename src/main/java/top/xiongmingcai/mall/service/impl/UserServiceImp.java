@@ -24,7 +24,7 @@ public class UserServiceImp implements UserService {
         //查询用户名是否存在,不允许重名
         User result = userMapper.selectByUsername(username);
         if (result != null) {
-            throw new BussinessException(ExceptionEnum.need_doNotAllowDuplicateNames);
+            throw new BussinessException(ExceptionEnum.NEED_DO_NOT_ALLOW_DUPLICATE_NAMES);
         }
 
         User user = new User();
@@ -32,7 +32,7 @@ public class UserServiceImp implements UserService {
         user.setPassword(password);
         int count = userMapper.insertSelective(user);
         if (count == 0) {
-            throw new BussinessException(100004, "创建用户失败");
+            throw new BussinessException(ExceptionEnum.USER_CREATION_FAILED);
         }
         return user;
     }

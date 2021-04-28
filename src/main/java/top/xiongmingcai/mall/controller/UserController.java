@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import top.xiongmingcai.mall.common.ApiRestResponse;
+import top.xiongmingcai.mall.exception.BussinessException;
 import top.xiongmingcai.mall.exception.ExceptionEnum;
 import top.xiongmingcai.mall.model.pojo.User;
 import top.xiongmingcai.mall.service.UserService;
@@ -33,14 +34,14 @@ public class UserController {
             return ApiRestResponse.error(ExceptionEnum.NEED_PASSWORD);
         }
         if (password.length() < 8) {
-            return ApiRestResponse.error(1004, "密码不能少于8位");
+            return ApiRestResponse.error(ExceptionEnum.NEED__LESS_THAN_8_BITS);
         }
 
         try {
             User register = userService.register(username, password);
-        } catch (RuntimeException ex) {
+        } catch (BussinessException ex) {
             ex.printStackTrace();
-            return ApiRestResponse.error(10034, "注册服务异常");
+            return ApiRestResponse.error(ex.getCode(), ex.getMsg());
         }
 
         return ApiRestResponse.success();
