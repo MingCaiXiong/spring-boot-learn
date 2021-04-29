@@ -24,6 +24,12 @@
         from imooc_mall_user
         where username = #{value}
     </select>
+    <select id="selectByUsernameAndPassword" parameterType="map" resultType="top.xiongmingcai.mall.model.pojo.User">
+        select *
+        from imooc_mall_user
+        where username = #{username}
+          and password = #{username}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from imooc_mall_user

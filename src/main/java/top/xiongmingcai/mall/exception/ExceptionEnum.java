@@ -10,6 +10,10 @@ public enum ExceptionEnum {
     NEED_DO_NOT_ALLOW_DUPLICATE_NAMES(10004,
             "不允许重名, 注册失败"),
     USER_CREATION_FAILED(10005, "用户入库失败"),
+    USER_WRONG_PASSWORD(10006, "密码错误"),
+    NEED_TOLOGIN(10007, "需要登录"),
+    NEED_UPDATE_FAILED(10008, "更新失败"),
+    NEED_NO_ADMINISTRATOR_RIGHTS(10009, "无管理员权限"),
     SYSTEM_ABNORMAL(20000, "系统异常");
     private Integer code;
     private String msg;

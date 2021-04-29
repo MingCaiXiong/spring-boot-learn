@@ -48,5 +48,42 @@ public class UserServiceImp implements UserService {
 
         return user;
     }
+
+    /**
+     * @param username
+     * @param password
+     * @return 登陆成功的用户
+     */
+    @Override
+    public User login(String username, String password) {
+        String md5Str = null;
+        try {
+            md5Str = MD5Utils.getMD5Str(password + Constant.SALT);
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        User user = userMapper.selectByUsername(username);
+
+        if (!user.getPassword().equals(md5Str)) {
+            throw new BussinessException(ExceptionEnum.USER_WRONG_PASSWORD);
+        }
+        user.setPassword(null);
+        return user;
+    }
+
+    @Override
+    public User updatePersonalizedSignatureByUser(User user) {
+        int updateCount = userMapper.updateByPrimaryKeySelective(user);
+        if (updateCount != 1) {
+            throw new BussinessException(ExceptionEnum.NEED_UPDATE_FAILED);
+        }
+        return user;
+    }
+
+    @Override
+    public boolean checkPermissions(User user) {
+        return user.getRole().equals(2);
+    }
 }
 
