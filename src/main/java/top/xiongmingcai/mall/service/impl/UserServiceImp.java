@@ -68,8 +68,10 @@ public class UserServiceImp implements UserService {
         if (!user.getPassword().equals(md5Str)) {
             throw new BussinessException(ExceptionEnum.USER_WRONG_PASSWORD);
         }
-        user.setPassword(null);
-        return user;
+        User updated = userMapper.selectByPrimaryKey(user.getId());
+        updated.setPassword(null);
+        updated.setRole(null);
+        return updated;
     }
 
     @Override

@@ -58,10 +58,28 @@ public class UserController {
         }
 
         User loginUser = userService.login(username, password);
+        session.setAttribute(Constant.loginUser, loginUser);
+        return ApiRestResponse.success(loginUser);
+    }
+
+    @PostMapping("/admin_login")
+    @ResponseBody
+    public ApiRestResponse adminLogin(String username, String password, HttpSession session) {
+        if (StringUtils.isEmpty(username)) {
+            return ApiRestResponse.error(ExceptionEnum.NEED_USER_NAME);
+        }
+        if (StringUtils.isEmpty(password)) {
+            return ApiRestResponse.error(ExceptionEnum.NEED_PASSWORD);
+        }
+        if (password.length() < 8) {
+            return ApiRestResponse.error(ExceptionEnum.NEED__LESS_THAN_8_BITS);
+        }
+
+        User loginUser = userService.login(username, password);
         boolean isAdminUser = userService.checkPermissions(loginUser);
         if (isAdminUser) {
             session.setAttribute(Constant.loginUser, loginUser);
-            return ApiRestResponse.success(/*loginUser*/);
+            return ApiRestResponse.success(loginUser);
         } else {
             return ApiRestResponse.error(ExceptionEnum.NEED_NO_ADMINISTRATOR_RIGHTS);
         }
@@ -81,8 +99,16 @@ public class UserController {
             user.setId(loginUser.getId());
             user.setPersonalizedSignature(signature);
             userService.updatePersonalizedSignatureByUser(user);
-            return ApiRestResponse.success(user);
+            return ApiRestResponse.success();
         }
+    }
+
+
+    @PostMapping("/logout")
+    @ResponseBody
+    public ApiRestResponse logout(HttpSession session) {
+        session.setAttribute(Constant.loginUser, null);
+        return ApiRestResponse.success();
     }
 }
 
