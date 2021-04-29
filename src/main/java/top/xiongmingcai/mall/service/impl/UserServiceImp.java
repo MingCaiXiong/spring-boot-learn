@@ -70,7 +70,6 @@ public class UserServiceImp implements UserService {
         }
         User updated = userMapper.selectByPrimaryKey(user.getId());
         updated.setPassword(null);
-        updated.setRole(null);
         return updated;
     }
 
