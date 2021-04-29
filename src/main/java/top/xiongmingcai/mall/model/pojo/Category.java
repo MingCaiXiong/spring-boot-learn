@@ -2,6 +2,9 @@ package top.xiongmingcai.mall.model.pojo;
 
 import java.util.Date;
 
+/**
+ * plain ordinary java object POJO的内在含义是指那些没有从任何类继承、也没有实现任何接口，更没有被其它框架侵入的java对象。
+ */
 public class Category {
     private Integer id;
 

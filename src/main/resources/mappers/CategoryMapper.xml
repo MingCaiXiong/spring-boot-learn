@@ -19,6 +19,12 @@
         from imooc_mall_category
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <select id="selectByName" parameterType="String" resultType="top.xiongmingcai.mall.model.pojo.Category">
+        select *
+        from imooc_mall_category
+        where name = #{value}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from imooc_mall_category
@@ -80,6 +86,15 @@
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
+    </insert>
+    <insert id="insertCategory" parameterType="top.xiongmingcai.mall.model.pojo.Category">
+        INSERT INTO imooc_mall.imooc_mall_category (name, type, parent_id, order_num)
+        VALUES (#{name}, #{type}, #{parentId,jdbcType=INTEGER},#{orderNum,jdbcType=INTEGER});
+        <selectKey resultType="integer" keyProperty="id" order="AFTER">
+            <!-- 获取当前连接最后产生的id号,并自动填充给goods里面的id主键属性-->
+            select last_insert_id()
+        </selectKey>
+
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="top.xiongmingcai.mall.model.pojo.Category">
         update imooc_mall_category

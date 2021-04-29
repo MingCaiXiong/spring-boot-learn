@@ -14,6 +14,10 @@ public enum ExceptionEnum {
     NEED_TOLOGIN(10007, "需要登录"),
     NEED_UPDATE_FAILED(10008, "更新失败"),
     NEED_NO_ADMINISTRATOR_RIGHTS(10009, "无管理员权限"),
+    NEED_MISSING_PARAMETERS(10010, "缺少分类参数"),
+    NEED__CATEGORY_ALREADY_EXISTS(10011, "分类已存在"),
+    USER_CREATION_CATEGORY_FAILED(100012, "分类入库失败"),
+
     SYSTEM_ABNORMAL(20000, "系统异常");
     private Integer code;
     private String msg;

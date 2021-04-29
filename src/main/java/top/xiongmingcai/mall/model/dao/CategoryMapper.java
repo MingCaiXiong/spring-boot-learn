@@ -14,4 +14,9 @@ public interface CategoryMapper {
     int updateByPrimaryKeySelective(Category record);
 
     int updateByPrimaryKey(Category record);
+
+    Category selectByName(String name);
+
+    int insertCategory(Category category);
+
 }
