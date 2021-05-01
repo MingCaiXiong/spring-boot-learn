@@ -1,8 +1,10 @@
 package top.xiongmingcai.mall.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.xiongmingcai.mall.common.ApiRestResponse;
@@ -17,6 +19,7 @@ import top.xiongmingcai.mall.service.UserService;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+@ApiOperation("后台添加商品分类")
 @RestController
 @RequestMapping("/admin")
 public class CategoryController {
@@ -26,7 +29,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/category")
-    public ApiRestResponse addCategory(@Valid CategoryReq categoryReq, HttpSession session, BindingResult result) {
+    public ApiRestResponse addCategory(@Valid @RequestBody CategoryReq categoryReq, HttpSession session, BindingResult result) {
         //请求参数效验
 
         //登录状态效验
