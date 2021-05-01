@@ -1,15 +1,19 @@
 package top.xiongmingcai.mall.model.request;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  *
  */
 public class CategoryReq {
+    @NotBlank(message = "分类名称不能为空")
     private String name;
-
+    @NotNull(message = "分类编号为必填项")
     private Integer type;
-
+    @NotNull(message = "上一级目录必填项")
     private Integer parentId;
-
+    @NotNull(message = "排序必填项")
     private Integer orderNum;
 
     public String getName() {
