@@ -1,5 +1,6 @@
 package top.xiongmingcai.mall.service.impl;
 
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import top.xiongmingcai.mall.exception.BussinessException;
 import top.xiongmingcai.mall.exception.ExceptionEnum;
@@ -10,6 +11,7 @@ import top.xiongmingcai.mall.service.CategoryService;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CategoryServiceImp implements CategoryService {
@@ -93,5 +95,12 @@ public class CategoryServiceImp implements CategoryService {
             throw new BussinessException(ExceptionEnum.USER_CATEGORY_DELETION_FAILED);
         }
         return category;
+    }
+
+    @Override
+    public PageInfo listForAdmin(Integer pageNum, Integer pageSize) {
+        List<Category> categoryVOList = categoryMapper.selectList(pageNum, pageSize);
+        PageInfo<Category> PageInfo = new PageInfo<>(categoryVOList);
+        return PageInfo;
     }
 }

@@ -24,6 +24,10 @@
         from imooc_mall_category
         where name = #{value}
     </select>
+    <select id="selectList" resultMap="BaseResultMap">
+        select *
+        from imooc_mall_category
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete

@@ -1,5 +1,6 @@
 package top.xiongmingcai.mall.controller;
 
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -79,5 +80,11 @@ public class CategoryController {
     public ApiRestResponse deleteCategory(@PathVariable("categoryId") Integer categoryId) {
         Category category = categoryService.deleteByPrimaryKey(categoryId);
         return ApiRestResponse.success(category);
+    }
+
+    @GetMapping("/category/list")
+    public ApiRestResponse getCategoryList(Integer pageNum, Integer pageSize) {
+        PageInfo pageInfo = categoryService.listForAdmin(pageNum, pageSize);
+        return ApiRestResponse.success(pageInfo);
     }
 }

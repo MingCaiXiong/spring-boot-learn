@@ -2,6 +2,8 @@ package top.xiongmingcai.mall.model.dao;
 
 import top.xiongmingcai.mall.model.pojo.Category;
 
+import java.util.List;
+
 public interface CategoryMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -19,4 +21,5 @@ public interface CategoryMapper {
 
     int insertCategory(Category category);
 
+    List<Category> selectList(Integer pageNum, Integer pageSize);
 }
