@@ -26,6 +26,7 @@ public class CategoryServiceImp implements CategoryService {
 
 
         Category category1 = new Category();
+        category1.setId(null);
         category1.setName(categoryReq.getName());
         category1.setType(categoryReq.getType());
         category1.setParentId(categoryReq.getParentId());
