@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
  *
  */
 public class CategoryReq {
+
+    private Integer id;
     @NotBlank(message = "分类名称不能为空")
     private String name;
     @NotNull(message = "分类编号为必填项")
@@ -15,6 +17,14 @@ public class CategoryReq {
     private Integer parentId;
     @NotNull(message = "排序必填项")
     private Integer orderNum;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
