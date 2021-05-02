@@ -18,7 +18,9 @@ public enum ExceptionEnum {
     NEED_MISSING_PARAMETERS_ID(10010, "缺少分类ID"),
     NEED__CATEGORY_ALREADY_EXISTS(10011, "分类已存在"),
     NEED_CATEGORY__DOES_NOT_EXIST(10011, "分类不存在,请传入正确ID"),
+    NEED_NO_DATA_FOUND(10011, "未找到数据,请传入正确ID"),
     USER_CREATION_CATEGORY_FAILED(100012, "分类入库失败"),
+    USER_CATEGORY_DELETION_FAILED(100012, "分类删除失败"),
 
     SYSTEM_ABNORMAL(20000, "系统异常");
     private Integer code;

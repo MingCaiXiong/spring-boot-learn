@@ -70,4 +70,14 @@ public class CategoryController {
             return ApiRestResponse.success(category);
         }
     }
+
+    /**
+     * @param categoryId
+     * @return 删除的数据
+     */
+    @DeleteMapping("/category/{categoryId}")
+    public ApiRestResponse deleteCategory(@PathVariable("categoryId") Integer categoryId) {
+        Category category = categoryService.deleteByPrimaryKey(categoryId);
+        return ApiRestResponse.success(category);
+    }
 }

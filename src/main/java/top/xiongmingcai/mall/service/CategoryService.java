@@ -8,6 +8,7 @@ public interface CategoryService {
 
     Category updateOneCategory(CategoryReq categoryReq);
 
-
     Category findOneCategory(Integer categoryId);
+
+    Category deleteByPrimaryKey(Integer categoryId);
 }

@@ -75,6 +75,23 @@ public class CategoryServiceImp implements CategoryService {
 
     @Override
     public Category findOneCategory(Integer categoryId) {
-        return categoryMapper.selectByPrimaryKey(categoryId);
+        Category category = categoryMapper.selectByPrimaryKey(categoryId);
+        if (category == null) {
+            throw new BussinessException(ExceptionEnum.NEED_NO_DATA_FOUND);
+        }
+        return category;
+    }
+
+    @Override
+    public Category deleteByPrimaryKey(Integer categoryId) {
+        Category category = categoryMapper.selectByPrimaryKey(categoryId);
+        if (category == null) {
+            throw new BussinessException(ExceptionEnum.NEED_NO_DATA_FOUND);
+        }
+        int count = categoryMapper.deleteByPrimaryKey(categoryId);
+        if (count != 1) {
+            throw new BussinessException(ExceptionEnum.USER_CATEGORY_DELETION_FAILED);
+        }
+        return category;
     }
 }
