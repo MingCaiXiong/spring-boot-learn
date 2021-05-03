@@ -10,6 +10,17 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
+
+    <resultMap id="CategoryVo" type="top.xiongmingcai.mall.model.vo.CategoryVo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+        <result column="order_num" jdbcType="INTEGER" property="orderNum"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
     <sql id="Base_Column_List">
         id, `name`, `type`, parent_id, order_num, create_time, update_time
     </sql>
@@ -27,6 +38,11 @@
     <select id="selectList" resultMap="BaseResultMap">
         select *
         from imooc_mall_category
+    </select>
+    <select id="selectByParentId" resultMap="CategoryVo">
+        select *
+        from imooc_mall_category
+        where parent_id = #{value}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

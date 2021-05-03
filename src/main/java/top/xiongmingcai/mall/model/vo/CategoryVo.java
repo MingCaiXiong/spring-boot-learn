@@ -3,7 +3,7 @@ package top.xiongmingcai.mall.model.vo;
 import java.util.Date;
 import java.util.List;
 
-public class CategoryVO {
+public class CategoryVo {
     private Integer id;
 
     private String name;
@@ -17,7 +17,7 @@ public class CategoryVO {
     private Date createTime;
 
     private Date updateTime;
-    private List<CategoryVO> categorychildNode;
+    private List<CategoryVo> categorychildNode;
 
     public Integer getId() {
         return id;
@@ -75,11 +75,11 @@ public class CategoryVO {
         this.updateTime = updateTime;
     }
 
-    public List<CategoryVO> getCategorychildNode() {
+    public List<CategoryVo> getCategorychildNode() {
         return categorychildNode;
     }
 
-    public void setCategorychildNode(List<CategoryVO> categorychildNode) {
+    public void setCategorychildNode(List<CategoryVo> categorychildNode) {
         this.categorychildNode = categorychildNode;
     }
 }

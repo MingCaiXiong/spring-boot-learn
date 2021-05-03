@@ -8,8 +8,10 @@ import javax.annotation.Resource;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class AdminFilter implements Filter {
     @Resource
@@ -21,42 +23,37 @@ public class AdminFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+                         FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
-        response.setContentType("application/json;charset=utf-8");
-
         HttpSession session = request.getSession();
-        //登录状态效验
-        User loginUser = (User) session.getAttribute(Constant.loginUser);
-        if (loginUser == null) {
-            response.getWriter().write("{\n" +
-                    "    \"code\": 1007,\n" +
-                    "    \"msg\": \"用户未登录\",\n" +
-                    "    \"data\": null\n" +
-                    "}");
-            response.getWriter().flush();
-            //关闭
-            response.getWriter().close();
-            //不会进入controller层
+        User currentUser = (User) session.getAttribute(Constant.loginUser);
+        if (currentUser == null) {
+            PrintWriter out = new HttpServletResponseWrapper(
+                    (HttpServletResponse) servletResponse).getWriter();
+            out.write("{\n"
+                    + "    \"status\": 10007,\n"
+                    + "    \"msg\": \"NEED_LOGIN\",\n"
+                    + "    \"data\": null\n"
+                    + "}");
+            out.flush();
+            out.close();
             return;
         }
-        //管理员权限效验
-        boolean admin = userService.checkPermissions(loginUser);
-        if (!admin) {
-            response.getWriter().write("{\n" +
-                    "    \"code\": 1007,\n" +
-                    "    \"msg\": \"没有操作权限\",\n" +
-                    "    \"data\": null\n" +
-                    "}");
-            response.getWriter().flush();
-            //关闭
-            response.getWriter().close();
-            //不会进入controller层
-            return;
-
-        } else {
+        //校验是否是管理员
+        boolean adminRole = userService.checkPermissions(currentUser);
+        if (adminRole) {
             filterChain.doFilter(servletRequest, servletResponse);
+        } else {
+            PrintWriter out = new HttpServletResponseWrapper(
+                    (HttpServletResponse) servletResponse).getWriter();
+            out.write("{\n"
+                    + "    \"status\": 10009,\n"
+                    + "    \"msg\": \"NEED_ADMIN\",\n"
+                    + "    \"data\": null\n"
+                    + "}");
+            out.flush();
+            out.close();
         }
     }
 

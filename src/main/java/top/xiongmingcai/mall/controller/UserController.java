@@ -9,15 +9,20 @@ import top.xiongmingcai.mall.common.ApiRestResponse;
 import top.xiongmingcai.mall.common.Constant;
 import top.xiongmingcai.mall.exception.ExceptionEnum;
 import top.xiongmingcai.mall.model.pojo.User;
+import top.xiongmingcai.mall.model.vo.CategoryVo;
+import top.xiongmingcai.mall.service.CategoryService;
 import top.xiongmingcai.mall.service.UserService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class UserController {
     @Resource
     private UserService userService;
+    @Resource
+    private CategoryService categoryService;
 
     @GetMapping(value = "/test")
     @ResponseBody
@@ -109,6 +114,13 @@ public class UserController {
     public ApiRestResponse logout(HttpSession session) {
         session.setAttribute(Constant.loginUser, null);
         return ApiRestResponse.success();
+    }
+
+    @GetMapping(value = "/categorys")
+    @ResponseBody
+    public ApiRestResponse listForGuest() {
+        List<CategoryVo> listReturnForGuest = categoryService.listForGuestByData();
+        return ApiRestResponse.success(listReturnForGuest);
     }
 }
 

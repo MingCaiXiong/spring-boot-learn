@@ -1,6 +1,7 @@
 package top.xiongmingcai.mall.model.dao;
 
 import top.xiongmingcai.mall.model.pojo.Category;
+import top.xiongmingcai.mall.model.vo.CategoryVo;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface CategoryMapper {
     int insertCategory(Category category);
 
     List<Category> selectList(Integer pageNum, Integer pageSize);
+
+    List<CategoryVo> selectByParentId(Integer parentId);
 }

@@ -83,7 +83,7 @@ public class CategoryController {
     }
 
     @GetMapping("/category/list")
-    public ApiRestResponse getCategoryList(Integer pageNum, Integer pageSize) {
+    public ApiRestResponse getCategoryList(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
         PageInfo pageInfo = categoryService.listForAdmin(pageNum, pageSize);
         return ApiRestResponse.success(pageInfo);
     }

@@ -7,6 +7,7 @@ import top.xiongmingcai.mall.exception.ExceptionEnum;
 import top.xiongmingcai.mall.model.dao.CategoryMapper;
 import top.xiongmingcai.mall.model.pojo.Category;
 import top.xiongmingcai.mall.model.request.CategoryReq;
+import top.xiongmingcai.mall.model.vo.CategoryVo;
 import top.xiongmingcai.mall.service.CategoryService;
 
 import javax.annotation.Resource;
@@ -102,5 +103,18 @@ public class CategoryServiceImp implements CategoryService {
         List<Category> categoryVOList = categoryMapper.selectList(pageNum, pageSize);
         PageInfo<Category> PageInfo = new PageInfo<>(categoryVOList);
         return PageInfo;
+    }
+
+    public List<CategoryVo> listForGuestByData() {
+        List<CategoryVo> levelOne = categoryMapper.selectByParentId(0);
+        levelOne.forEach(item -> {
+            List<CategoryVo> levelTwo = categoryMapper.selectByParentId(item.getId());
+            levelTwo.forEach((CategoryVo levelTwoItem) -> {
+                List<CategoryVo> levelThree = categoryMapper.selectByParentId(levelTwoItem.getId());
+                levelTwoItem.setCategorychildNode(levelThree);
+            });
+            item.setCategorychildNode(levelTwo);
+        });
+        return levelOne;
     }
 }
