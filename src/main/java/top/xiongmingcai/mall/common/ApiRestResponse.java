@@ -1,12 +1,18 @@
 package top.xiongmingcai.mall.common;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import top.xiongmingcai.mall.exception.ExceptionEnum;
 
+@ApiModel(value = "通用PI接口返回", description = "Common Api Response")
 public class ApiRestResponse<T> {
     private static final int OK_CODE = 10000;
     private static final String OK_MSG = "SUCCESS";
+    @ApiModelProperty(value = "通用返回状态", required = true)
     private Integer status;
+    @ApiModelProperty(value = "通用返回信息", required = true)
     private String msg;
+    @ApiModelProperty(value = "通用返回数据", required = true)
     private T data;
 
     public ApiRestResponse(Integer status, String msg, T data) {

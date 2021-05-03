@@ -3,8 +3,8 @@ package top.xiongmingcai.mall.controller;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 import top.xiongmingcai.mall.common.ApiRestResponse;
 import top.xiongmingcai.mall.common.Constant;
 import top.xiongmingcai.mall.exception.ExceptionEnum;
@@ -33,7 +33,7 @@ public class CategoryController {
     }
 
     @PostMapping("/category")
-    public ApiRestResponse addCategory(@Valid @RequestBody CategoryReq categoryReq, HttpSession session, BindingResult result) {
+    public ApiRestResponse addCategory(@Valid @RequestBody CategoryReq categoryReq, @ApiIgnore HttpSession session) {
         //请求参数效验
 
         //登录状态效验
@@ -53,7 +53,7 @@ public class CategoryController {
     }
 
     @PutMapping("/category")
-    public ApiRestResponse updateCategory(@Valid CategoryReq categoryReq, HttpSession session) {
+    public ApiRestResponse updateCategory(@Valid CategoryReq categoryReq, @ApiIgnore HttpSession session) {
         //请求参数效验
 
         //登录状态效验

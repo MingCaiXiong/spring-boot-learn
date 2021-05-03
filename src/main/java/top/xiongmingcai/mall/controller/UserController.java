@@ -1,10 +1,12 @@
 package top.xiongmingcai.mall.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 import top.xiongmingcai.mall.common.ApiRestResponse;
 import top.xiongmingcai.mall.common.Constant;
 import top.xiongmingcai.mall.exception.ExceptionEnum;
@@ -51,7 +53,7 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
-    public ApiRestResponse login(String username, String password, HttpSession session) {
+    public ApiRestResponse login(String username, String password, @ApiIgnore HttpSession session) {
         if (StringUtils.isEmpty(username)) {
             return ApiRestResponse.error(ExceptionEnum.NEED_USER_NAME);
         }
@@ -69,7 +71,7 @@ public class UserController {
 
     @PostMapping("/admin_login")
     @ResponseBody
-    public ApiRestResponse adminLogin(String username, String password, HttpSession session) {
+    public ApiRestResponse adminLogin(String username, String password, @ApiIgnore HttpSession session) {
         if (StringUtils.isEmpty(username)) {
             return ApiRestResponse.error(ExceptionEnum.NEED_USER_NAME);
         }
@@ -93,7 +95,7 @@ public class UserController {
 
     @PostMapping("/signature")
     @ResponseBody
-    public ApiRestResponse updateSignature(HttpSession session, String signature) {
+    public ApiRestResponse updateSignature(@ApiIgnore HttpSession session, String signature) {
 
         User loginUser = (User) session.getAttribute(Constant.loginUser);
         if (loginUser == null) {
@@ -111,13 +113,14 @@ public class UserController {
 
     @PostMapping("/logout")
     @ResponseBody
-    public ApiRestResponse logout(HttpSession session) {
+    public ApiRestResponse logout(@ApiIgnore HttpSession session) {
         session.setAttribute(Constant.loginUser, null);
         return ApiRestResponse.success();
     }
 
     @GetMapping(value = "/categorys")
     @ResponseBody
+    @ApiOperation(value = "/categorys", notes = "获取当前的轮播图")
     public ApiRestResponse listForGuest() {
         List<CategoryVo> listReturnForGuest = categoryService.listForGuestByData();
         return ApiRestResponse.success(listReturnForGuest);
