@@ -21,6 +21,12 @@ public class MallWebMvcConfig extends WebMvcConfigurationSupport {
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
+        //linux服务器文件目录
+        //registry.addResourceHandler("/restaurantRes/**").addResourceLocations("file:/pic/upload/");
+
         super.addResourceHandlers(registry);
     }
 

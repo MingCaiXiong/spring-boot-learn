@@ -22,6 +22,12 @@
         from imooc_mall_product
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <select id="selectByName" resultType="top.xiongmingcai.mall.model.pojo.Product">
+        select
+        <include refid="Base_Column_List"/>
+        from imooc_mall_product
+        where name = #{name,jdbcType=VARCHAR}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from imooc_mall_product
@@ -103,6 +109,10 @@
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
+        <selectKey resultType="integer" keyProperty="id" order="AFTER">
+            <!-- 获取当前连接最后产生的id号,并自动填充给goods里面的id主键属性-->
+            select last_insert_id()
+        </selectKey>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="top.xiongmingcai.mall.model.pojo.Product">
         update imooc_mall_product
