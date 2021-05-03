@@ -1,6 +1,7 @@
 package top.xiongmingcai.mall.service.impl;
 
 import com.github.pagehelper.PageInfo;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import top.xiongmingcai.mall.exception.BussinessException;
 import top.xiongmingcai.mall.exception.ExceptionEnum;
@@ -105,6 +106,7 @@ public class CategoryServiceImp implements CategoryService {
         return PageInfo;
     }
 
+    @Cacheable(value = "listForGuestByData")
     public List<CategoryVo> listForGuestByData() {
         List<CategoryVo> levelOne = categoryMapper.selectByParentId(0);
         levelOne.forEach(item -> {
