@@ -100,7 +100,7 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public PageInfo listForAdmin(Integer pageNum, Integer pageSize) {
+    public PageInfo<Category> listForAdmin(Integer pageNum, Integer pageSize) {
         List<Category> categoryVOList = categoryMapper.selectList(pageNum, pageSize);
         PageInfo<Category> PageInfo = new PageInfo<>(categoryVOList);
         return PageInfo;
@@ -116,6 +116,23 @@ public class CategoryServiceImp implements CategoryService {
                 levelTwoItem.setCategorychildNode(levelThree);
             });
             item.setCategorychildNode(levelTwo);
+        });
+        return levelOne;
+    }
+
+    public List<CategoryVo> listForGuestByData(Integer parentId) {
+        List<CategoryVo> levelOne = categoryMapper.selectByParentId(parentId);
+        levelOne.forEach(item -> {
+            if (item.getId() != null) {
+                List<CategoryVo> levelTwo = categoryMapper.selectByParentId(item.getId());
+                levelTwo.forEach((CategoryVo levelTwoItem) -> {
+                    if (levelTwoItem.getId() != null) {
+                        List<CategoryVo> levelThree = categoryMapper.selectByParentId(levelTwoItem.getId());
+                        levelTwoItem.setCategorychildNode(levelThree);
+                    }
+                });
+                item.setCategorychildNode(levelTwo);
+            }
         });
         return levelOne;
     }

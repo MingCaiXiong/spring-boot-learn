@@ -19,4 +19,6 @@ public interface CategoryService {
     PageInfo listForAdmin(Integer pageNum, Integer pageSize);
 
     List<CategoryVo> listForGuestByData();
+
+    List<CategoryVo> listForGuestByData(Integer parentId);
 }

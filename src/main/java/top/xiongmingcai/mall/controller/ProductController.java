@@ -1,6 +1,7 @@
 package top.xiongmingcai.mall.controller;
 
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import top.xiongmingcai.mall.common.ApiRestResponse;
 import top.xiongmingcai.mall.exception.ExceptionEnum;
 import top.xiongmingcai.mall.model.pojo.Product;
 import top.xiongmingcai.mall.model.request.AddProductReq;
+import top.xiongmingcai.mall.model.request.ProductListReq;
 import top.xiongmingcai.mall.model.request.UpdateProductReq;
 import top.xiongmingcai.mall.service.ProductService;
 import top.xiongmingcai.mall.util.NullAwareBeanUtilsBean;
@@ -90,4 +92,13 @@ public class ProductController {
         return ApiRestResponse.success(productPageInfo);
     }
 
+    @ApiOperation("前台商品列表")
+    @GetMapping("/products")
+    public ApiRestResponse listForWeb(ProductListReq productListReq,
+                                      @RequestParam(required = false, defaultValue = "1") Integer pageNum,
+                                      @RequestParam(required = false, defaultValue = "10") Integer pageSise) {
+
+        PageInfo<Product> productPageInfo = productService.list(productListReq, pageNum, pageSise);
+        return ApiRestResponse.success(productPageInfo);
+    }
 }

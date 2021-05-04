@@ -2,6 +2,7 @@ package top.xiongmingcai.mall.model.dao;
 
 import org.apache.ibatis.annotations.Param;
 import top.xiongmingcai.mall.model.pojo.Product;
+import top.xiongmingcai.mall.model.query.ProductListQuery;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface ProductMapper {
     int batchUpdateSellStatus(@Param("ids") Integer[] ids, @Param("sellStatus") Integer sellStatus);
 
     List<Product> selectListForAdmin();
+
+    List<Product> selectList(@Param("query") ProductListQuery query);
 }
