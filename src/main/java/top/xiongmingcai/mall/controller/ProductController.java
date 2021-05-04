@@ -8,8 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 import top.xiongmingcai.mall.common.ApiRestResponse;
 import top.xiongmingcai.mall.exception.ExceptionEnum;
 import top.xiongmingcai.mall.model.pojo.Product;
-import top.xiongmingcai.mall.model.request.ProductReq;
-import top.xiongmingcai.mall.model.request.updateProductReq;
+import top.xiongmingcai.mall.model.request.AddProductReq;
+import top.xiongmingcai.mall.model.request.UpdateProductReq;
 import top.xiongmingcai.mall.service.ProductService;
 import top.xiongmingcai.mall.util.NullAwareBeanUtilsBean;
 
@@ -35,9 +35,9 @@ public class ProductController {
     }
 
     @PostMapping("/product")
-    public ApiRestResponse postProduct(@Valid ProductReq productReq) {
+    public ApiRestResponse createOneProduct(@Valid AddProductReq addProductReq) {
         Product product = new Product();
-        BeanUtils.copyProperties(productReq, product);
+        BeanUtils.copyProperties(addProductReq, product);
         Product oneProduct = productService.createOneProduct(product);
         return ApiRestResponse.success(oneProduct);
     }
@@ -53,7 +53,7 @@ public class ProductController {
     @PostMapping("/product/{id}")
     public ApiRestResponse updateProduct(
             @PathVariable(value = "id") Integer productId,
-            @Valid updateProductReq productReq) throws InvocationTargetException, IllegalAccessException {
+            @Valid UpdateProductReq productReq) throws InvocationTargetException, IllegalAccessException {
         Product sourcePriduct = productService.findOneProduct(productId);
 
         if (sourcePriduct == null) {
@@ -73,7 +73,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/product")
-    public ApiRestResponse deleteOneProduct(Integer id) {
+    public ApiRestResponse deleteOneProduct(@RequestParam Integer id) {
         productService.deleteOneProduct(id);
         return ApiRestResponse.success();
     }
