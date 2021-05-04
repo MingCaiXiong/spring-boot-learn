@@ -103,5 +103,10 @@ public class ProductServiceimp implements ProductService {
         }
     }
 
+    @Override
+    public void batchUpdateSellStatus(Integer[] ids, Integer sellStatis) {
+        productMapper.batchUpdateSellStatus(ids, sellStatis);
+    }
+
 
 }

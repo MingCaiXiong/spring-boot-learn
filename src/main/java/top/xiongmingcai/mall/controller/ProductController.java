@@ -76,4 +76,10 @@ public class ProductController {
         productService.deleteOneProduct(id);
         return ApiRestResponse.success();
     }
+
+    @PutMapping("/product/batch_update_sell_status")
+    public ApiRestResponse batchUpdateSellStatus(Integer[] ids, @RequestParam("status") Integer sellStatus) {
+        productService.batchUpdateSellStatus(ids, sellStatus);
+        return ApiRestResponse.success();
+    }
 }
