@@ -1,6 +1,5 @@
 package top.xiongmingcai.mall.service.impl;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,7 +7,6 @@ import top.xiongmingcai.mall.exception.BussinessException;
 import top.xiongmingcai.mall.exception.ExceptionEnum;
 import top.xiongmingcai.mall.model.dao.ProductMapper;
 import top.xiongmingcai.mall.model.pojo.Product;
-import top.xiongmingcai.mall.model.request.ProductReq;
 import top.xiongmingcai.mall.service.ProductService;
 
 import javax.annotation.Resource;
@@ -30,19 +28,17 @@ public class ProductServiceimp implements ProductService {
     }
 
     @Override
-    public Product createOneProduct(ProductReq productReq) {
+    public Product createOneProduct(Product productReq) {
         Product product = productMapper.selectByName(productReq.getName());
         if (product != null) {
             throw new BussinessException(ExceptionEnum.NEED__PRODUCT_ALREADY_EXISTS);
         }
-        Product freshProduct = new Product();
-        BeanUtils.copyProperties(productReq, freshProduct);
-        freshProduct.setId(null);
-        int i = productMapper.insertSelective(freshProduct);
-        if (i != 1) {
+
+        int count = productMapper.insertSelective(productReq);
+        if (count != 1) {
             throw new BussinessException(ExceptionEnum.NEED___LOST_GOODS_IN_STORAGE);
         }
-        return findOneProduct(freshProduct.getId());
+        return productMapper.selectByPrimaryKey(productReq.getId());
     }
 
     @Override
@@ -82,6 +78,29 @@ public class ProductServiceimp implements ProductService {
 
         return newFileName;
 
+    }
+
+    @Override
+    public Product update(Product updateProduct) {
+        if (updateProduct.getName() != null) {
+            Product product = productMapper.selectByName(updateProduct.getName());
+            if (product != null) {
+                throw new BussinessException(ExceptionEnum.NEED__PRODUCT_ALREADY_EXISTS);
+            }
+        }
+        int count = productMapper.updateByPrimaryKeySelective(updateProduct);
+        if (count != 1) {
+            throw new BussinessException(ExceptionEnum.NEED___LOST_GOODS_IN_STORAGE);
+        }
+        return productMapper.selectByPrimaryKey(updateProduct.getId());
+    }
+
+    @Override
+    public void deleteOneProduct(Integer id) {
+        int count = productMapper.deleteByPrimaryKey(id);
+        if (count != 1) {
+            throw new BussinessException(ExceptionEnum.NEED___LOST_GOODS_IN_STORAGE);
+        }
     }
 
 

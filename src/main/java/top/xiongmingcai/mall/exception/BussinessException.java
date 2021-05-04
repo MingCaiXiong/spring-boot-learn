@@ -7,6 +7,10 @@ public class BussinessException extends RuntimeException {
     private Integer code;
     private String msg;
 
+
+    public BussinessException() {
+    }
+
     public BussinessException(Integer code, String msg) {
         super(msg);
         this.code = code;

@@ -26,11 +26,9 @@ public class AdminFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute(Constant.loginUser);
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("application/json; charset=utf-8");
+
         if (currentUser == null) {
             PrintWriter out = new HttpServletResponseWrapper(
                     (HttpServletResponse) servletResponse).getWriter();
