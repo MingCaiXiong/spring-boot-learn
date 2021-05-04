@@ -1,5 +1,8 @@
 package top.xiongmingcai.mall.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -106,6 +110,14 @@ public class ProductServiceimp implements ProductService {
     @Override
     public void batchUpdateSellStatus(Integer[] ids, Integer sellStatis) {
         productMapper.batchUpdateSellStatus(ids, sellStatis);
+    }
+
+    @Override
+    public PageInfo<Product> listForAdmin(Integer pageNum, Integer pageSize) {
+        Page<Product> productPage = PageHelper.startPage(pageNum, pageSize);
+        List<Product> productList = productMapper.selectListForAdmin();
+        PageInfo<Product> pageInfo = new PageInfo<>(productList);
+        return pageInfo;
     }
 
 

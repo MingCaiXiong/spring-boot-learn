@@ -1,5 +1,6 @@
 package top.xiongmingcai.mall.controller;
 
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
@@ -78,8 +79,15 @@ public class ProductController {
     }
 
     @PutMapping("/product/batch_update_sell_status")
-    public ApiRestResponse batchUpdateSellStatus(Integer[] ids, @RequestParam("status") Integer sellStatus) {
+    public ApiRestResponse batchUpdateSellStatus(@RequestParam("ids") Integer[] ids, @RequestParam("status") Integer sellStatus) {
         productService.batchUpdateSellStatus(ids, sellStatus);
         return ApiRestResponse.success();
     }
+
+    @GetMapping("/product/list")
+    public ApiRestResponse listForAdmin(@RequestParam Integer pageNum, @RequestParam Integer pageSise) {
+        PageInfo<Product> productPageInfo = productService.listForAdmin(pageNum, pageSise);
+        return ApiRestResponse.success(productPageInfo);
+    }
+
 }
