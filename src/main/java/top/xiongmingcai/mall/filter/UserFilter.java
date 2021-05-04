@@ -1,5 +1,7 @@
 package top.xiongmingcai.mall.filter;
 
+
+import org.springframework.stereotype.Component;
 import top.xiongmingcai.mall.common.Constant;
 import top.xiongmingcai.mall.model.pojo.User;
 
@@ -11,21 +13,15 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+@Component
 public class UserFilter implements Filter {
 
-    public static User currentUser;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
-
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
-                         FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpSession session = request.getSession();
-        currentUser = (User) session.getAttribute(Constant.loginUser);
+        User currentUser = (User) session.getAttribute(Constant.loginUser);
 
         if (currentUser == null) {
             PrintWriter out = new HttpServletResponseWrapper(
@@ -40,10 +36,5 @@ public class UserFilter implements Filter {
             return;
         }
         filterChain.doFilter(servletRequest, servletResponse);
-    }
-
-    @Override
-    public void destroy() {
-
     }
 }

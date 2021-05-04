@@ -1,5 +1,6 @@
 package top.xiongmingcai.mall.model.dao;
 
+import org.apache.ibatis.annotations.Param;
 import top.xiongmingcai.mall.model.pojo.Cart;
 
 public interface CartMapper {
@@ -14,4 +15,6 @@ public interface CartMapper {
     int updateByPrimaryKeySelective(Cart record);
 
     int updateByPrimaryKey(Cart record);
+
+    Cart selectByUserIdAndProductId(@Param("userId") Integer userID, @Param("productId") Integer productId);
 }

@@ -64,7 +64,9 @@ public class UserServiceImp implements UserService {
             e.printStackTrace();
         }
         User user = userMapper.selectByUsername(username);
-
+        if (user == null) {
+            throw new BussinessException(ExceptionEnum.USERNAME_DOES_NOT_EXIST);
+        }
         if (!user.getPassword().equals(md5Str)) {
             throw new BussinessException(ExceptionEnum.USER_WRONG_PASSWORD);
         }

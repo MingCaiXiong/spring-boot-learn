@@ -11,6 +11,7 @@ public enum ExceptionEnum {
             "不允许重名, 注册失败"),
     USER_CREATION_FAILED(10005, "用户入库失败"),
     USER_WRONG_PASSWORD(10006, "密码错误"),
+    USERNAME_DOES_NOT_EXIST(10006, "用户名不存在"),
     NEED_TOLOGIN(10007, "需要登录"),
     BODY_NOT_MATCH(400, "请求的数据格式不符!"),
     NEED_UPDATE_FAILED(10008, "更新失败"),
@@ -25,6 +26,8 @@ public enum ExceptionEnum {
     USER_PICTURE_ROAD_KING_DOES_NOT_EXIST(100012, "图片路劲不存在"),
     PICTURE_SAVE_DOES_NOT_EXIST(100012, "图片保存失败"),
     NEED___LOST_GOODS_IN_STORAGE(10011, "商品入库失败"),
+    NOT_SALE(10011, "商品已下架"),
+    INVENTORY_SHORTAGE(10011, "库存不足"),
     USER_CATEGORY_DELETION_FAILED(100012, "分类删除失败"),
 
     SYSTEM_ABNORMAL(20000, "系统异常");

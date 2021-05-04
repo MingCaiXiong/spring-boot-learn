@@ -16,6 +16,7 @@ import top.xiongmingcai.mall.service.CategoryService;
 import top.xiongmingcai.mall.service.UserService;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -124,6 +125,15 @@ public class UserController {
     public ApiRestResponse listForGuest() {
         List<CategoryVo> listReturnForGuest = categoryService.listForGuestByData();
         return ApiRestResponse.success(listReturnForGuest);
+    }
+
+    @GetMapping("/session")
+    @ResponseBody
+    public ApiRestResponse session(@ApiIgnore HttpServletRequest request) {
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+
+
+        return ApiRestResponse.success(loginUser);
     }
 }
 

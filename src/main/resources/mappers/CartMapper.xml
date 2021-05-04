@@ -19,6 +19,12 @@
         from imooc_mall_cart
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <select id="selectByUserIdAndProductId" resultType="top.xiongmingcai.mall.model.pojo.Cart">
+        select
+        <include refid="Base_Column_List"/>
+        from imooc_mall_cart
+        where product_id = #{productId} and user_id = #{userId}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from imooc_mall_cart
