@@ -8,4 +8,6 @@ public interface CartService {
     List<CartVo> list(Integer userId);
 
     List<CartVo> addCart(Integer userId, Integer productId, Integer count);
+
+    List<CartVo> deleteCart(Integer userId, Integer productId);
 }

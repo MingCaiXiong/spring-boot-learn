@@ -34,6 +34,13 @@ public class CartController {
         return ApiRestResponse.success(cartVoList);
     }
 
+    @DeleteMapping
+    public ApiRestResponse deleteCart(@RequestParam Integer productId, @ApiIgnore HttpSession session) {
+        User user = (User) session.getAttribute(loginUser);
+        List<CartVo> cartVoList = cartService.deleteCart(user.getId(), productId);
+        return ApiRestResponse.success(cartVoList);
+    }
+
     @GetMapping("/list")
     public ApiRestResponse list(@ApiIgnore HttpServletRequest request) {
         User loginUser = (User) request.getSession().getAttribute("loginUser");
@@ -42,22 +49,4 @@ public class CartController {
         return ApiRestResponse.success(cartVoList);
     }
 
-    @GetMapping("/session")
-    public ApiRestResponse session(@ApiIgnore HttpServletRequest request) {
-        User loginUser = (User) request.getSession().getAttribute("loginUser");
-
-
-        return ApiRestResponse.success(loginUser);
-    }
-
-    @PostMapping("/session")
-    public ApiRestResponse postsession(@ApiIgnore HttpServletRequest request) {
-        User user = userMapper.selectByPrimaryKey(2);
-
-
-        request.getSession().setAttribute("loginUser", user);
-
-
-        return ApiRestResponse.success(loginUser);
-    }
 }

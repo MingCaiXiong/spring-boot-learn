@@ -68,4 +68,18 @@ public class CartServiceImp implements CartService {
             throw new BussinessException(ExceptionEnum.INVENTORY_SHORTAGE);
         }
     }
+
+    @Override
+    public List<CartVo> deleteCart(Integer userId, Integer productId) {
+        Cart cart = cartMapper.selectByUserIdAndProductId(userId, productId);
+
+        if (cart == null) {
+            //不在购物车
+            throw new BussinessException(ExceptionEnum.ORDER_DOES_NOT_EXIST);
+        } else {
+            cartMapper.deleteByPrimaryKey(cart.getId());
+        }
+        return list(userId);
+    }
+
 }

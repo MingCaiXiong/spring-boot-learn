@@ -29,6 +29,7 @@ public enum ExceptionEnum {
     NOT_SALE(10011, "商品已下架"),
     INVENTORY_SHORTAGE(10011, "库存不足"),
     USER_CATEGORY_DELETION_FAILED(100012, "分类删除失败"),
+    ORDER_DOES_NOT_EXIST(100012, "购物车订单不存在"),
 
     SYSTEM_ABNORMAL(20000, "系统异常");
     private Integer code;
