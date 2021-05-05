@@ -22,4 +22,9 @@ public interface CartMapper {
     Cart selectByUserIdAndProductId(@Param("userId") Integer userID, @Param("productId") Integer productId);
 
     List<CartVo> list(@Param("userId") Integer userId);
+
+    int updateByProductIdsekectOrNot(@Param("userId") Integer userId,
+                                     @Param("productId") Integer productId,
+                                     @Param("selected") Integer selected
+    );
 }

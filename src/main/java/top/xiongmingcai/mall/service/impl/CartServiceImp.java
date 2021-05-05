@@ -82,4 +82,39 @@ public class CartServiceImp implements CartService {
         return list(userId);
     }
 
+    /**
+     * 选择是否
+     *
+     * @param userId
+     * @param productId
+     * @param sekected  是否已勾选：0代表未勾选，1代表已勾选
+     * @return
+     */
+    @Override
+    public List<CartVo> sekectOrNot(Integer userId, Integer productId, Integer sekected) {
+        Cart cart = cartMapper.selectByUserIdAndProductId(userId, productId);
+
+        if (cart == null) {
+            //不在购物车
+            throw new BussinessException(ExceptionEnum.ORDER_DOES_NOT_EXIST);
+        } else {
+            cartMapper.updateByProductIdsekectOrNot(userId, productId, sekected);
+        }
+        return list(userId);
+    }
+
+
+    /**
+     * 购物车全部选择是否
+     *
+     * @param userId
+     * @param sekected
+     * @return
+     */
+    @Override
+    public List<CartVo> sekectOrNot(Integer userId, Integer sekected) {
+        cartMapper.updateByProductIdsekectOrNot(userId, null, sekected);
+        return list(userId);
+    }
+
 }

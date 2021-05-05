@@ -10,4 +10,9 @@ public interface CartService {
     List<CartVo> addCart(Integer userId, Integer productId, Integer count);
 
     List<CartVo> deleteCart(Integer userId, Integer productId);
+
+    List<CartVo> sekectOrNot(Integer userId, Integer productId, Integer sekected);
+
+    List<CartVo> sekectOrNot(Integer userId, Integer sekected);
+
 }

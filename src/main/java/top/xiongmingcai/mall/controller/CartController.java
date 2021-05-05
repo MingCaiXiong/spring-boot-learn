@@ -49,4 +49,22 @@ public class CartController {
         return ApiRestResponse.success(cartVoList);
     }
 
+
+    @PutMapping("/sekect/selected")
+    public ApiRestResponse sekectCartSelected(@RequestParam Integer productId,
+                                              @RequestParam Integer selected,
+                                              @ApiIgnore HttpSession session) {
+        User user = (User) session.getAttribute(loginUser);
+        List<CartVo> cartVoList = cartService.sekectOrNot(user.getId(), productId, selected);
+        return ApiRestResponse.success(cartVoList);
+    }
+
+    @PutMapping("/sekect/selected/all")
+    public ApiRestResponse sekectCartSelectedAll(@RequestParam Integer selected,
+                                                 @ApiIgnore HttpSession session) {
+        User user = (User) session.getAttribute(loginUser);
+        List<CartVo> cartVoList = cartService.sekectOrNot(user.getId(), selected);
+        return ApiRestResponse.success(cartVoList);
+    }
+
 }

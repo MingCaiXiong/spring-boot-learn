@@ -135,4 +135,13 @@
             update_time = #{updateTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <update id="updateByProductIdsekectOrNot" parameterType="top.xiongmingcai.mall.model.pojo.Cart">
+        /*是否已勾选：0代表未勾选，1代表已勾选*/
+        update imooc_mall_cart
+        set selected = #{selected}
+        where user_id = #{userId}
+        <if test="productId != null">
+            and product_id = #{productId,jdbcType=INTEGER}
+        </if>
+    </update>
 </mapper>
