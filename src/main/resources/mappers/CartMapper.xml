@@ -25,6 +25,20 @@
         from imooc_mall_cart
         where product_id = #{productId} and user_id = #{userId}
     </select>
+    <select id="list" resultType="top.xiongmingcai.mall.model.vo.CartVo">
+        select c.id       as id
+             , p.id       as productId
+             , c.user_id  as userId
+             , c.quantity as quantity
+             , c.selected as selected
+             , p.price    as price
+             , p.name     as productName
+             , p.image    as productImage
+        from imooc_mall_cart c
+                 left join imooc_mall_product p on c.product_id = p.id
+        where user_id = #{userId}
+          and p.status = 1;
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from imooc_mall_cart

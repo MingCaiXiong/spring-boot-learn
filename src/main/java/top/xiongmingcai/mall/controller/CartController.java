@@ -6,11 +6,13 @@ import springfox.documentation.annotations.ApiIgnore;
 import top.xiongmingcai.mall.common.ApiRestResponse;
 import top.xiongmingcai.mall.model.dao.UserMapper;
 import top.xiongmingcai.mall.model.pojo.User;
+import top.xiongmingcai.mall.model.vo.CartVo;
 import top.xiongmingcai.mall.service.CartService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 import static top.xiongmingcai.mall.common.Constant.loginUser;
 
@@ -28,8 +30,16 @@ public class CartController {
     @PostMapping
     public ApiRestResponse createCart(@RequestParam Integer productId, @RequestParam Integer count, @ApiIgnore HttpSession session) {
         User user = (User) session.getAttribute(loginUser);
-        cartService.addCart(user.getId(), productId, count);
-        return ApiRestResponse.success();
+        List<CartVo> cartVoList = cartService.addCart(user.getId(), productId, count);
+        return ApiRestResponse.success(cartVoList);
+    }
+
+    @GetMapping("/list")
+    public ApiRestResponse list(@ApiIgnore HttpServletRequest request) {
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        List<CartVo> cartVoList = cartService.list(loginUser.getId());
+
+        return ApiRestResponse.success(cartVoList);
     }
 
     @GetMapping("/session")
