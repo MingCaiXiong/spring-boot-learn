@@ -1,6 +1,5 @@
 package top.xiongmingcai.mall.controller;
 
-import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -123,7 +122,6 @@ public class UserController {
 
     @GetMapping(value = "/categorys")
     @ResponseBody
-    @ApiOperation(value = "/categorys", notes = "获取当前的轮播图")
     public ApiRestResponse listForGuest() {
         List<CategoryVo> listReturnForGuest = categoryService.listForGuestByData();
         return ApiRestResponse.success(listReturnForGuest);
