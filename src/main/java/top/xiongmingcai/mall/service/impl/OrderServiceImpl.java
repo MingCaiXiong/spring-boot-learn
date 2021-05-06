@@ -3,6 +3,7 @@ package top.xiongmingcai.mall.service.impl;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import top.xiongmingcai.mall.common.Constant;
 import top.xiongmingcai.mall.exception.BussinessException;
 import top.xiongmingcai.mall.exception.ExceptionEnum;
@@ -34,6 +35,7 @@ import static top.xiongmingcai.mall.common.Constant.selected.CHECKED;
  * @date 2021-05-05 17:10:39
  */
 @Service
+
 public class OrderServiceImpl implements OrderService {
     @Resource
     private CartService cartService;
@@ -50,6 +52,7 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private OrderItemMapper orderItemMapper;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public String createOrder(CreateOrderReq body, Integer userId) {
         // 获得购物车
