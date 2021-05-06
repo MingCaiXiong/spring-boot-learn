@@ -1,5 +1,6 @@
 package top.xiongmingcai.mall.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -101,6 +102,7 @@ public class CategoryServiceImp implements CategoryService {
 
     @Override
     public PageInfo<Category> listForAdmin(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         List<Category> categoryVOList = categoryMapper.selectList(pageNum, pageSize);
         PageInfo<Category> PageInfo = new PageInfo<>(categoryVOList);
         return PageInfo;

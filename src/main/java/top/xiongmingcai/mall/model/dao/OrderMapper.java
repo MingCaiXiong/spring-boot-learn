@@ -3,6 +3,8 @@ package top.xiongmingcai.mall.model.dao;
 import org.apache.ibatis.annotations.Param;
 import top.xiongmingcai.mall.model.pojo.Order;
 
+import java.util.List;
+
 public interface OrderMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -13,6 +15,8 @@ public interface OrderMapper {
     Order selectByPrimaryKey(Integer id);
 
     Order selectByOrderNo(@Param("orderNo") String orderNo);
+
+    List<Order> selectByUserIdOrderByCreateTimeDesc(Integer userId);
 
     int updateByPrimaryKeySelective(Order record);
 

@@ -1,5 +1,6 @@
 package top.xiongmingcai.mall.controller;
 
+import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 import top.xiongmingcai.mall.common.ApiRestResponse;
@@ -31,6 +32,16 @@ public class OrderController {
     public ApiRestResponse getOrder(@PathVariable("orderNo") String orderNo, @ApiIgnore HttpSession session) {
         User loginUser = (User) session.getAttribute(Constant.loginUser);
         OrderVo orderVo = orderService.orderInfo(orderNo, loginUser.getId());
+        return ApiRestResponse.success(orderVo);
+    }
+
+
+    @GetMapping("/orders")
+    public ApiRestResponse getOrders(@RequestParam(defaultValue = "1") Integer pageNum,
+                                     @RequestParam(defaultValue = "10") Integer pageSize,
+                                     @ApiIgnore HttpSession session) {
+        User loginUser = (User) session.getAttribute(Constant.loginUser);
+        PageInfo orderVo = orderService.pagingQuery(loginUser.getId(), pageNum, pageSize);
         return ApiRestResponse.success(orderVo);
     }
 }

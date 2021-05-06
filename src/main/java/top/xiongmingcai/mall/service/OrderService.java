@@ -1,6 +1,7 @@
 package top.xiongmingcai.mall.service;
 
 
+import com.github.pagehelper.PageInfo;
 import top.xiongmingcai.mall.model.request.CreateOrderReq;
 import top.xiongmingcai.mall.model.vo.OrderVo;
 
@@ -15,4 +16,6 @@ public interface OrderService {
     String createOrder(CreateOrderReq createOrderReq, Integer userId);
 
     OrderVo orderInfo(String orderNo, Integer userId);
+
+    PageInfo pagingQuery(Integer userId, Integer pageNum, Integer pageSize);
 }

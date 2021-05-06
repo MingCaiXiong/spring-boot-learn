@@ -35,6 +35,14 @@
         from imooc_mall_order
         where order_no = #{orderNo,jdbcType=VARCHAR}
     </select>
+    <select id="selectByUserIdOrderByCreateTimeDesc" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from imooc_mall_order
+        where user_id = #{userId,jdbcType=INTEGER}
+        order by create_time desc
+
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from imooc_mall_order

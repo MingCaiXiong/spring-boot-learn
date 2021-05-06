@@ -1,6 +1,8 @@
 package top.xiongmingcai.mall.service.impl;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -131,14 +133,23 @@ public class OrderServiceImpl implements OrderService {
         if (!order.getUserId().equals(userId)) {
             throw new BussinessException(ExceptionEnum.ORDER__DOES_NOT_BELONG_TO_YOU);
         }
-        //创建订单视图对象
+        return getOrderVo(order);
+    }
+
+    /**
+     * 订单视图对象拼装
+     *
+     * @param order
+     * @return
+     */
+    private OrderVo getOrderVo(Order order) {
         OrderVo orderVo = new OrderVo();
         BeanUtils.copyProperties(order, orderVo);
         String statusMessage = Constant.OrderStatusEnum.codeof(orderVo.getOrderStatus()).getValue();
         orderVo.setOrderStatusName(statusMessage);
 
         //查询订单中的所有商品
-        List<OrderItem> orderItem = orderItemMapper.selectByOrderNo(orderNo);
+        List<OrderItem> orderItem = orderItemMapper.selectByOrderNo(order.getOrderNo());
         // List<OrderItem>  转换为 List<OrderItemVo>
         List<OrderItemVo> orderItemVos = orderItem.stream().map(orderItem1 -> {
             OrderItemVo orderItemVo = new OrderItemVo();
@@ -149,6 +160,17 @@ public class OrderServiceImpl implements OrderService {
 
         orderVo.setOrderItemVoList(orderItemVos);
         return orderVo;
+    }
+
+    @Override
+    public PageInfo pagingQuery(Integer userId, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Order> orders = orderMapper.selectByUserIdOrderByCreateTimeDesc(userId);
+        List<OrderVo> orderVoList = orders.stream()
+                .filter(Objects::nonNull)
+                .map(this::getOrderVo)
+                .collect(Collectors.toList());
+        return new PageInfo<>(orderVoList);
     }
 
     /**
