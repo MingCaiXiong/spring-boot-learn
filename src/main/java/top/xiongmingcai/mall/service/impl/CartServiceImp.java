@@ -57,7 +57,8 @@ public class CartServiceImp implements CartService {
         return list(userId);
     }
 
-    private void validProduct(Integer productId, Integer count) {
+    @Override
+    public void validProduct(Integer productId, Integer count) {
         Product product = productMapper.selectByPrimaryKey(productId);
         // ① 合法验证
         if (product == null || product.getStatus().equals(Constant.ProductStatusEnum.ON_SALE.getCode())) {

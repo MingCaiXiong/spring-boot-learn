@@ -35,7 +35,7 @@ public class Constant {
 
     public interface selected {
         //是否已勾选：0代表未勾选，1代表已勾选
-        int UNCHECKED = 0;  // 普通用户
-        int CHECKED = 1;     // 管理员
+        int UNCHECKED = 0;
+        int CHECKED = 1;
     }
 }
