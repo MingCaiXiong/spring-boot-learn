@@ -2,6 +2,7 @@ package top.xiongmingcai.mall.service;
 
 
 import top.xiongmingcai.mall.model.request.CreateOrderReq;
+import top.xiongmingcai.mall.model.vo.OrderVo;
 
 /**
  * Service：订单表;
@@ -12,4 +13,6 @@ import top.xiongmingcai.mall.model.request.CreateOrderReq;
 public interface OrderService {
 
     String createOrder(CreateOrderReq createOrderReq, Integer userId);
+
+    OrderVo orderInfo(String orderNo, Integer userId);
 }

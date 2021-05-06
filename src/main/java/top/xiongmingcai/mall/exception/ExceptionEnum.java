@@ -33,6 +33,7 @@ public enum ExceptionEnum {
     USER_CATEGORY_DELETION_FAILED(100012, "分类删除失败"),
     CART_EMPTY(100012, "购物车没有已勾选商品需要支付"),
     ORDER_DOES_NOT_EXIST(100012, "购物车订单不存在"),
+    ORDER__DOES_NOT_BELONG_TO_YOU(100012, "购物车订单不属于你"),
 
     SYSTEM_ABNORMAL(20000, "系统异常");
     private Integer code;

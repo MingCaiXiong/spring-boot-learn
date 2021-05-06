@@ -2,6 +2,7 @@ package top.xiongmingcai.mall.service.impl;
 
 
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.xiongmingcai.mall.common.Constant;
@@ -16,6 +17,8 @@ import top.xiongmingcai.mall.model.pojo.OrderItem;
 import top.xiongmingcai.mall.model.pojo.Product;
 import top.xiongmingcai.mall.model.request.CreateOrderReq;
 import top.xiongmingcai.mall.model.vo.CartVo;
+import top.xiongmingcai.mall.model.vo.OrderItemVo;
+import top.xiongmingcai.mall.model.vo.OrderVo;
 import top.xiongmingcai.mall.service.CartService;
 import top.xiongmingcai.mall.service.OrderService;
 import top.xiongmingcai.mall.util.OrderIdUtils;
@@ -117,6 +120,35 @@ public class OrderServiceImpl implements OrderService {
             orderItemMapper.insertSelective(orderItem);
         });
         return orderNum;
+    }
+
+    @Override
+    public OrderVo orderInfo(String orderNo, Integer userId) {
+        Order order = orderMapper.selectByOrderNo(orderNo);
+        if (order == null) {
+            throw new BussinessException(ExceptionEnum.ORDER_DOES_NOT_EXIST);
+        }
+        if (!order.getUserId().equals(userId)) {
+            throw new BussinessException(ExceptionEnum.ORDER__DOES_NOT_BELONG_TO_YOU);
+        }
+        //创建订单视图对象
+        OrderVo orderVo = new OrderVo();
+        BeanUtils.copyProperties(order, orderVo);
+        String statusMessage = Constant.OrderStatusEnum.codeof(orderVo.getOrderStatus()).getValue();
+        orderVo.setOrderStatusName(statusMessage);
+
+        //查询订单中的所有商品
+        List<OrderItem> orderItem = orderItemMapper.selectByOrderNo(orderNo);
+        // List<OrderItem>  转换为 List<OrderItemVo>
+        List<OrderItemVo> orderItemVos = orderItem.stream().map(orderItem1 -> {
+            OrderItemVo orderItemVo = new OrderItemVo();
+            BeanUtils.copyProperties(orderItem1, orderItemVo);
+            return orderItemVo;
+
+        }).collect(Collectors.toList());
+
+        orderVo.setOrderItemVoList(orderItemVos);
+        return orderVo;
     }
 
     /**

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import springfox.documentation.annotations.ApiIgnore;
 import top.xiongmingcai.mall.common.ApiRestResponse;
@@ -20,7 +19,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class UserController {
@@ -56,9 +54,8 @@ public class UserController {
 
     @PostMapping(value = "/login", params = {"username", "password"})
     @ResponseBody
-    public ApiRestResponse login(@RequestBody Map<String, String> params, @ApiIgnore HttpSession session) {
-        String username = params.get("username");
-        String password = params.get("password");
+    public ApiRestResponse login(String username, String password, @ApiIgnore HttpSession session) {
+
 
         if (StringUtils.isEmpty(username)) {
             return ApiRestResponse.error(ExceptionEnum.NEED_USER_NAME);

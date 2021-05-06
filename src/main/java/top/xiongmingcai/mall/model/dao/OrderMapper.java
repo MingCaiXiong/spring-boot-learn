@@ -1,5 +1,6 @@
 package top.xiongmingcai.mall.model.dao;
 
+import org.apache.ibatis.annotations.Param;
 import top.xiongmingcai.mall.model.pojo.Order;
 
 public interface OrderMapper {
@@ -10,6 +11,8 @@ public interface OrderMapper {
     int insertSelective(Order record);
 
     Order selectByPrimaryKey(Integer id);
+
+    Order selectByOrderNo(@Param("orderNo") String orderNo);
 
     int updateByPrimaryKeySelective(Order record);
 

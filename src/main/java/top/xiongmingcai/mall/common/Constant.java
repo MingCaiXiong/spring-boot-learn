@@ -46,14 +46,14 @@ public class Constant {
         COMPLETE(40, "交易完成");
 
         private String value;
-        private int code;
+        private Integer code;
 
         OrderStatusEnum(int code, String value) {
             this.code = code;
             this.value = value;
         }
 
-        public static OrderStatusEnum codeof(int code) {
+        public static OrderStatusEnum codeof(Integer code) {
             for (OrderStatusEnum value : values()) {
                 if (value.getCode() == code) {
                     return value;
