@@ -44,4 +44,12 @@ public class OrderController {
         PageInfo orderVo = orderService.pagingQuery(loginUser.getId(), pageNum, pageSize);
         return ApiRestResponse.success(orderVo);
     }
+
+    @PutMapping("/order/{orderNo}")
+    public ApiRestResponse cancelOrders(@PathVariable("orderNo") String orderNo,
+                                        @ApiIgnore HttpSession session) {
+        User loginUser = (User) session.getAttribute(Constant.loginUser);
+        orderService.cancelOrders(orderNo, loginUser.getId());
+        return ApiRestResponse.success();
+    }
 }

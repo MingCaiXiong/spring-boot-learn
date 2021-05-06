@@ -27,6 +27,7 @@ import top.xiongmingcai.mall.util.OrderIdUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -126,6 +127,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderVo orderInfo(String orderNo, Integer userId) {
+        Order order = verifyOrder(orderNo, userId);
+        return getOrderVo(order);
+    }
+
+    private Order verifyOrder(String orderNo, Integer userId) {
         Order order = orderMapper.selectByOrderNo(orderNo);
         if (order == null) {
             throw new BussinessException(ExceptionEnum.ORDER_DOES_NOT_EXIST);
@@ -133,7 +139,7 @@ public class OrderServiceImpl implements OrderService {
         if (!order.getUserId().equals(userId)) {
             throw new BussinessException(ExceptionEnum.ORDER__DOES_NOT_BELONG_TO_YOU);
         }
-        return getOrderVo(order);
+        return order;
     }
 
     /**
@@ -171,6 +177,18 @@ public class OrderServiceImpl implements OrderService {
                 .map(this::getOrderVo)
                 .collect(Collectors.toList());
         return new PageInfo<>(orderVoList);
+    }
+
+    @Override
+    public void cancelOrders(String orderNo, Integer userId) {
+        Order verifyOrder = verifyOrder(orderNo, userId);
+        if (verifyOrder.getOrderStatus().equals(Constant.OrderStatusEnum.UNPAID.getCode())) {
+            verifyOrder.setOrderStatus(Constant.OrderStatusEnum.CANCEL.getCode());
+            verifyOrder.setEndTime(new Date());
+            orderMapper.updateByPrimaryKeySelective(verifyOrder);
+        } else {
+            throw new BussinessException(ExceptionEnum.ORDER_STATUS_DOES_NOT_MATCH);
+        }
     }
 
     /**

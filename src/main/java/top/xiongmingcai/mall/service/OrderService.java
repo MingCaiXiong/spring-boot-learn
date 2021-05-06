@@ -18,4 +18,6 @@ public interface OrderService {
     OrderVo orderInfo(String orderNo, Integer userId);
 
     PageInfo pagingQuery(Integer userId, Integer pageNum, Integer pageSize);
+
+    void cancelOrders(String orderNo, Integer id);
 }
