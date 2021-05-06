@@ -1,6 +1,8 @@
 package top.xiongmingcai.mall.common;
 
 import com.google.common.collect.Sets;
+import top.xiongmingcai.mall.exception.BussinessException;
+import top.xiongmingcai.mall.exception.ExceptionEnum;
 
 import java.util.Set;
 
@@ -22,6 +24,42 @@ public class Constant {
         ProductStatusEnum(int code, String value) {
             this.code = code;
             this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public int getCode() {
+            return code;
+        }
+    }
+
+    /**
+     * 0用户已取消，10未付款（初始状态），20已付款，30已发货，40交易完成
+     */
+    public enum OrderStatusEnum {
+        CANCEL(0, "用户已取消"),
+        UNPAID(10, "未付款"),
+        PAID(20, "已付款"),
+        SHIPPED(30, "已发货"),
+        COMPLETE(40, "交易完成");
+
+        private String value;
+        private int code;
+
+        OrderStatusEnum(int code, String value) {
+            this.code = code;
+            this.value = value;
+        }
+
+        public static OrderStatusEnum codeof(int code) {
+            for (OrderStatusEnum value : values()) {
+                if (value.getCode() == code) {
+                    return value;
+                }
+            }
+            throw new BussinessException(ExceptionEnum.NOT_EMUM);
         }
 
         public String getValue() {

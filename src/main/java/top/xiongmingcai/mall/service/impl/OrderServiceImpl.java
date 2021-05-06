@@ -3,9 +3,12 @@ package top.xiongmingcai.mall.service.impl;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
+import top.xiongmingcai.mall.common.Constant;
 import top.xiongmingcai.mall.exception.BussinessException;
 import top.xiongmingcai.mall.exception.ExceptionEnum;
 import top.xiongmingcai.mall.model.dao.CartMapper;
+import top.xiongmingcai.mall.model.dao.OrderItemMapper;
+import top.xiongmingcai.mall.model.dao.OrderMapper;
 import top.xiongmingcai.mall.model.dao.ProductMapper;
 import top.xiongmingcai.mall.model.pojo.Order;
 import top.xiongmingcai.mall.model.pojo.OrderItem;
@@ -19,6 +22,7 @@ import top.xiongmingcai.mall.util.OrderIdUtils;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static top.xiongmingcai.mall.common.Constant.selected.CHECKED;
@@ -33,13 +37,21 @@ import static top.xiongmingcai.mall.common.Constant.selected.CHECKED;
 public class OrderServiceImpl implements OrderService {
     @Resource
     private CartService cartService;
+
     @Resource
     private ProductMapper productMapper;
+
     @Resource
     private CartMapper cartMapper;
 
+    @Resource
+    private OrderMapper orderMapper;
+
+    @Resource
+    private OrderItemMapper orderItemMapper;
+
     @Override
-    public void createOrder(CreateOrderReq createOrderReq, Integer userId) {
+    public String createOrder(CreateOrderReq body, Integer userId) {
         // 获得购物车
         List<CartVo> cartVoList = cartService.list(userId);
         // 过滤出选中的购物车商品
@@ -87,6 +99,34 @@ public class OrderServiceImpl implements OrderService {
         String orderNum = OrderIdUtils.getorder(Long.valueOf(userId));
         Order order = new Order();
         order.setOrderNo(orderNum);
+        order.setUserId(userId);
+        order.setTotalPrice(totalPrice(orderItemList));
+        order.setReceiverName(body.getReceiverName());
+        order.setReceiverMobile(body.getReceiverMobile());
+        order.setReceiverAddress(body.getReceiverAddress());
+        order.setOrderStatus(Constant.OrderStatusEnum.UNPAID.getCode());
+        order.setPostage(0);
+        order.setPaymentType(1);
+        orderMapper.insertSelective(order);
+
+        orderItemList.forEach(orderItem -> {
+            orderItem.setOrderNo(order.getOrderNo());
+            orderItemMapper.insertSelective(orderItem);
+        });
+        return orderNum;
+    }
+
+    /**
+     * 订单金额累加
+     *
+     * @param orderItemList
+     * @return
+     */
+    private Integer totalPrice(List<OrderItem> orderItemList) {
+        return orderItemList.stream()
+                .filter(Objects::nonNull)
+                .mapToInt(OrderItem::getTotalPrice)
+                .sum();
     }
 
 }

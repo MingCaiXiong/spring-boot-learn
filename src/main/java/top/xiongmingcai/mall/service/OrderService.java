@@ -11,5 +11,5 @@ import top.xiongmingcai.mall.model.request.CreateOrderReq;
  */
 public interface OrderService {
 
-    void createOrder(CreateOrderReq createOrderReq, Integer userId);
+    String createOrder(CreateOrderReq createOrderReq, Integer userId);
 }

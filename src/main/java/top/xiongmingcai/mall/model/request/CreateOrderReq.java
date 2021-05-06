@@ -25,10 +25,6 @@ public class CreateOrderReq {
     @NotBlank(message = "收货地址不能为空")
     private String receiverAddress;
 
-    /**
-     * 订单状态: 0用户已取消，10未付款（初始状态），20已付款，30已发货，40交易完成
-     */
-    private Integer orderStatus;
 
     /**
      * 运费，默认为0
@@ -64,13 +60,6 @@ public class CreateOrderReq {
         this.receiverAddress = receiverAddress;
     }
 
-    public Integer getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(Integer orderStatus) {
-        this.orderStatus = orderStatus;
-    }
 
     public Integer getPostage() {
         return postage;

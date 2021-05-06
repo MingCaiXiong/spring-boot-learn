@@ -29,6 +29,7 @@ public enum ExceptionEnum {
     Not_ENOUGH(10011, "商品不足"),
     NOT_SALE(10011, "商品已下架"),
     INVENTORY_SHORTAGE(10011, "库存不足"),
+    NOT_EMUM(10011, "未找到对应点枚举类"),
     USER_CATEGORY_DELETION_FAILED(100012, "分类删除失败"),
     CART_EMPTY(100012, "购物车没有已勾选商品需要支付"),
     ORDER_DOES_NOT_EXIST(100012, "购物车订单不存在"),
