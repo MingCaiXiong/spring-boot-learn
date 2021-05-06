@@ -3,10 +3,14 @@ package top.xiongmingcai.mall.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.zxing.WriterException;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import top.xiongmingcai.mall.common.Constant;
 import top.xiongmingcai.mall.exception.BussinessException;
 import top.xiongmingcai.mall.exception.ExceptionEnum;
@@ -24,8 +28,12 @@ import top.xiongmingcai.mall.model.vo.OrderVo;
 import top.xiongmingcai.mall.service.CartService;
 import top.xiongmingcai.mall.service.OrderService;
 import top.xiongmingcai.mall.util.OrderIdUtils;
+import top.xiongmingcai.mall.util.QRCodeUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,6 +65,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Resource
     private OrderItemMapper orderItemMapper;
+
+    @Value("${file.upload.ip}")
+    private String SERVER_NAME;
+    @Value("${file.upload.dir}")
+    private String FILE_UPLOAD_DIR;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -202,6 +215,25 @@ public class OrderServiceImpl implements OrderService {
                 .filter(Objects::nonNull)
                 .mapToInt(OrderItem::getTotalPrice)
                 .sum();
+    }
+
+    /**
+     * 生成扫描支付图片
+     *
+     * @param orderNo
+     * @return 二维码图片可访问地址
+     * @throws IOException
+     * @throws WriterException
+     */
+    @Override
+    public String qrcode(String orderNo, Integer userId) throws IOException, WriterException {
+        verifyOrder(orderNo, userId);
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = requestAttributes.getRequest();
+        String payurl = MessageFormat.format("{0}://{1}:{2}/pay/{3}", request.getScheme(), SERVER_NAME, String.valueOf(request.getServerPort()), orderNo);
+        QRCodeUtils.generateQRCodeImage(payurl, 350, 350, FILE_UPLOAD_DIR + "/images/" + orderNo + ".png");
+        //图片可访问地址
+        return MessageFormat.format("{0}://{1}:{2}/static/images/{3}.png", request.getScheme(), SERVER_NAME, String.valueOf(request.getServerPort()), orderNo);
     }
 
 }

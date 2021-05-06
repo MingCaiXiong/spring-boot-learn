@@ -2,8 +2,11 @@ package top.xiongmingcai.mall.service;
 
 
 import com.github.pagehelper.PageInfo;
+import com.google.zxing.WriterException;
 import top.xiongmingcai.mall.model.request.CreateOrderReq;
 import top.xiongmingcai.mall.model.vo.OrderVo;
+
+import java.io.IOException;
 
 /**
  * Service：订单表;
@@ -20,4 +23,7 @@ public interface OrderService {
     PageInfo pagingQuery(Integer userId, Integer pageNum, Integer pageSize);
 
     void cancelOrders(String orderNo, Integer id);
+
+
+    String qrcode(String orderNo, Integer userId) throws IOException, WriterException;
 }

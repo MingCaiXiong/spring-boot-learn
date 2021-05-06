@@ -1,6 +1,7 @@
 package top.xiongmingcai.mall.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.google.zxing.WriterException;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 import top.xiongmingcai.mall.common.ApiRestResponse;
@@ -13,6 +14,7 @@ import top.xiongmingcai.mall.service.OrderService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 
 
 @RestController
@@ -51,5 +53,12 @@ public class OrderController {
         User loginUser = (User) session.getAttribute(Constant.loginUser);
         orderService.cancelOrders(orderNo, loginUser.getId());
         return ApiRestResponse.success();
+    }
+
+    @PostMapping("/order/qr/{orderNo}")
+    public ApiRestResponse qrcode(@PathVariable("orderNo") String orderNo, @ApiIgnore HttpSession session) throws IOException, WriterException {
+        User loginUser = (User) session.getAttribute(Constant.loginUser);
+        String qrcode = orderService.qrcode(orderNo, loginUser.getId());
+        return ApiRestResponse.success(qrcode);
     }
 }

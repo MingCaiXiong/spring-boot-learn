@@ -3,6 +3,7 @@ package top.xiongmingcai.mall.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
@@ -27,7 +28,8 @@ import java.util.*;
 
 @Service
 public class ProductServiceimp implements ProductService {
-    public String FILE_UPLOAD_DIR = "/Users/xmc/IdeaProjects/mall.xiongmingcai.top/src/main/resources/static";
+    @Value("${file.upload.dir}")
+    private String FILE_UPLOAD_DIR;
     @Resource
     private ProductMapper productMapper;
     @Resource

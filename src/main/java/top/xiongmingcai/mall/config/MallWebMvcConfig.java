@@ -25,7 +25,8 @@ public class MallWebMvcConfig extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
         //linux服务器文件目录
-        //registry.addResourceHandler("/restaurantRes/**").addResourceLocations("file:/pic/upload/");
+        registry.addResourceHandler("/public/**").addResourceLocations("file:///Users/xmc/IdeaProjects/mall.xiongmingcai.top/src/main/resources/public/");
+        registry.addResourceHandler("/static/**").addResourceLocations("file:///Users/xmc/IdeaProjects/mall.xiongmingcai.top/src/main/resources/static/images");
 
         super.addResourceHandlers(registry);
     }
