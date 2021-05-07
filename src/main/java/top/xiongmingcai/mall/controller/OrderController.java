@@ -68,4 +68,11 @@ public class OrderController {
         String qrcode = orderService.qrcode(orderNo, loginUser.getId());
         return ApiRestResponse.success(qrcode);
     }
+
+    @PutMapping("/order/finish")
+    public ApiRestResponse finish(@RequestParam String orderNo, @ApiIgnore HttpSession session) {
+        User loginUser = (User) session.getAttribute(Constant.loginUser);
+        orderService.finish(loginUser, orderNo);
+        return ApiRestResponse.success();
+    }
 }

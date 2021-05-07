@@ -42,8 +42,8 @@ public class Constant {
         CANCEL(0, "用户已取消"),
         UNPAID(10, "未付款"),
         PAID(20, "已付款"),
-        SHIPPED(30, "已发货"),
-        COMPLETE(40, "交易完成");
+        DELIVERED(30, "已发货"),
+        FINISH(40, "交易完成");
 
         private String value;
         private Integer code;

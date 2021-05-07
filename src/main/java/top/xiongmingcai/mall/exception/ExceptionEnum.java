@@ -35,6 +35,10 @@ public enum ExceptionEnum {
     ORDER_DOES_NOT_EXIST(100012, "购物车订单不存在"),
     ORDER__DOES_NOT_BELONG_TO_YOU(100012, "购物车订单不属于你"),
     ORDER_STATUS_DOES_NOT_MATCH(100012, "订单状态不符"),
+    INSUFFICIENT_PERMISSIONS(100012, "没有操作订单权限"),
+    ORDER_HAS_BEEN_SHIPPED(100012, "订单已发货"),
+    ORDER_UNPAID(100012, "订单尚未支付"),
+    ORDER_CANCELLED(100012, "订单已取消"),
 
     SYSTEM_ABNORMAL(20000, "系统异常");
     private Integer code;

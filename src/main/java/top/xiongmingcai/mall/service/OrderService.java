@@ -3,6 +3,7 @@ package top.xiongmingcai.mall.service;
 
 import com.github.pagehelper.PageInfo;
 import com.google.zxing.WriterException;
+import top.xiongmingcai.mall.model.pojo.User;
 import top.xiongmingcai.mall.model.request.CreateOrderReq;
 import top.xiongmingcai.mall.model.vo.OrderVo;
 
@@ -30,4 +31,8 @@ public interface OrderService {
     String qrcode(String orderNo, Integer userId) throws IOException, WriterException;
 
     void pay(String orderNo);
+
+    void delivered(Integer id, String orderNo);
+
+    void finish(User user, String orderNo);
 }

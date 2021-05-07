@@ -18,10 +18,6 @@ public class UserServiceImp implements UserService {
     @Resource
     private UserMapper userMapper;
 
-    @Override
-    public User getUser() {
-        return userMapper.selectByPrimaryKey(1);
-    }
 
     @Override
     public User register(String username, String password) {

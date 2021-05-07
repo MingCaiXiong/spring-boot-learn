@@ -26,11 +26,6 @@ public class UserController {
     @Resource
     private CategoryService categoryService;
 
-    @GetMapping(value = "/test")
-    @ResponseBody
-    public User getPerson() {
-        return userService.getUser();
-    }
 
     @PostMapping("/register")
     @ResponseBody

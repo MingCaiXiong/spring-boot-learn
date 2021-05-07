@@ -21,12 +21,14 @@ import top.xiongmingcai.mall.model.dao.ProductMapper;
 import top.xiongmingcai.mall.model.pojo.Order;
 import top.xiongmingcai.mall.model.pojo.OrderItem;
 import top.xiongmingcai.mall.model.pojo.Product;
+import top.xiongmingcai.mall.model.pojo.User;
 import top.xiongmingcai.mall.model.request.CreateOrderReq;
 import top.xiongmingcai.mall.model.vo.CartVo;
 import top.xiongmingcai.mall.model.vo.OrderItemVo;
 import top.xiongmingcai.mall.model.vo.OrderVo;
 import top.xiongmingcai.mall.service.CartService;
 import top.xiongmingcai.mall.service.OrderService;
+import top.xiongmingcai.mall.service.UserService;
 import top.xiongmingcai.mall.util.OrderIdUtils;
 import top.xiongmingcai.mall.util.QRCodeUtils;
 
@@ -64,10 +66,14 @@ public class OrderServiceImpl implements OrderService {
     private OrderMapper orderMapper;
 
     @Resource
+    private UserService userService;
+
+    @Resource
     private OrderItemMapper orderItemMapper;
 
     @Value("${file.upload.ip}")
     private String SERVER_NAME;
+
     @Value("${file.upload.dir}")
     private String FILE_UPLOAD_DIR;
 
@@ -144,6 +150,13 @@ public class OrderServiceImpl implements OrderService {
         return getOrderVo(order);
     }
 
+    /**
+     * 验证订单有效性
+     *
+     * @param orderNo
+     * @param userId  当前登录的用户
+     * @return 当前登录的用户下的一条有效订单
+     */
     private Order verifyOrder(String orderNo, Integer userId) {
         Order order = orderMapper.selectByOrderNo(orderNo);
         if (order == null) {
@@ -264,6 +277,58 @@ public class OrderServiceImpl implements OrderService {
             order.setOrderStatus(Constant.OrderStatusEnum.PAID.getCode());
             order.setPayTime(new Date());
             orderMapper.updateByPrimaryKeySelective(order);
+        }
+    }
+
+    /**
+     * 管理员发货
+     *
+     * @param userId
+     * @param orderNo
+     */
+    @Override
+    public void delivered(Integer userId, String orderNo) {
+        Order order = orderMapper.selectByOrderNo(orderNo);
+        if (order == null) {
+            throw new BussinessException(ExceptionEnum.ORDER_DOES_NOT_EXIST);
+        }
+        //0用户已取消，10未付款（初始状态），20已付款，30已发货，40交易完成
+        int cancel = Constant.OrderStatusEnum.CANCEL.getCode();//0用户已取消
+        int UNPAID = Constant.OrderStatusEnum.UNPAID.getCode();//10未付款
+        int paid = Constant.OrderStatusEnum.PAID.getCode();//20已付款
+        int delvered = Constant.OrderStatusEnum.DELIVERED.getCode();//30已发货
+
+        if (order.getOrderStatus() == cancel) {
+            throw new BussinessException(ExceptionEnum.ORDER_CANCELLED);
+        } else if (order.getOrderStatus() == delvered) {
+            throw new BussinessException(ExceptionEnum.ORDER_HAS_BEEN_SHIPPED);
+        }
+        if (order.getOrderStatus() == UNPAID) {
+            throw new BussinessException(ExceptionEnum.ORDER_UNPAID);
+        } else if (order.getOrderStatus() == paid) {
+            order.setOrderStatus(delvered);
+            order.setDeliveryTime(new Date());
+            orderMapper.updateByPrimaryKeySelective(order);
+        } else {
+            throw new BussinessException(ExceptionEnum.ORDER_STATUS_DOES_NOT_MATCH);
+        }
+    }
+
+    @Override
+    public void finish(User user, String orderNo) {
+        Order order = verifyOrder(orderNo, user.getId());
+
+        if (!userService.checkPermissions(user) && !order.getUserId().equals(user.getId())) {
+            throw new BussinessException(ExceptionEnum.INSUFFICIENT_PERMISSIONS);
+        }
+        if (order.getOrderStatus() == Constant.OrderStatusEnum.FINISH.getCode()) {
+            throw new BussinessException(ExceptionEnum.ORDER_STATUS_DOES_NOT_MATCH.getCode(), Constant.OrderStatusEnum.FINISH.getValue());
+        } else if (order.getOrderStatus() == Constant.OrderStatusEnum.DELIVERED.getCode()) {
+            order.setOrderStatus(Constant.OrderStatusEnum.FINISH.getCode());
+            order.setEndTime(new Date());
+            orderMapper.updateByPrimaryKeySelective(order);
+        } else {
+            throw new BussinessException(ExceptionEnum.ORDER_STATUS_DOES_NOT_MATCH);
         }
     }
 }

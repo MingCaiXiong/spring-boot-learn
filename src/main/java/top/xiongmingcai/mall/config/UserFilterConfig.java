@@ -14,6 +14,7 @@ public class UserFilterConfig {
         registration.setFilter(new UserFilter());
         registration.addUrlPatterns("/cart/*");
         registration.addUrlPatterns("/order/*");
+        registration.addUrlPatterns("/orders");
         return registration;
     }
 }

@@ -18,13 +18,13 @@ public class AdminFilterConfig {
     //将过滤器发到链路中
     @Bean(name = "AdminFilterConf")
     public FilterRegistrationBean<Filter> adminFilterConfig() {
-        FilterRegistrationBean<Filter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
-        filterFilterRegistrationBean.setFilter(adminFilter());
-        filterFilterRegistrationBean.addUrlPatterns("/admin/category/*");
-//        filterFilterRegistrationBean.addUrlPatterns("/admin/product/*");
-        filterFilterRegistrationBean.addUrlPatterns("/admin/order/*");
-        filterFilterRegistrationBean.addUrlPatterns("/admin/orders");
-        filterFilterRegistrationBean.setName("AdminFilterConf");
-        return filterFilterRegistrationBean;
+        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
+        registration.setFilter(adminFilter());
+        registration.addUrlPatterns("/admin/*");
+
+        registration.addInitParameter("exclusions", "api/demand/gettypelist");
+
+        registration.setName("AdminFilterConf");
+        return registration;
     }
 }
