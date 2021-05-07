@@ -182,14 +182,30 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public PageInfo pagingQuery(Integer userId, Integer pageNum, Integer pageSize) {
+    public PageInfo findOneOrders(Integer userId, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Order> orders = orderMapper.selectByUserIdOrderByCreateTimeDesc(userId);
         List<OrderVo> orderVoList = orders.stream()
                 .filter(Objects::nonNull)
                 .map(this::getOrderVo)
                 .collect(Collectors.toList());
-        return new PageInfo<>(orderVoList);
+        PageInfo<OrderVo> pageInfo = new PageInfo<>(orderVoList);
+        pageInfo.setList(orderVoList);
+        return pageInfo;
+    }
+
+
+    @Override
+    public PageInfo findAllOrdersForAdmin(Integer id, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Order> orders = orderMapper.selectAllOrderByCreateTimeDesc();
+        List<OrderVo> orderVoList = orders.stream()
+                .filter(order -> order.getTotalPrice() != null)
+                .map(this::getOrderVo)
+                .collect(Collectors.toList());
+        PageInfo<OrderVo> pageInfo = new PageInfo<>(orderVoList);
+        pageInfo.setList(orderVoList);
+        return pageInfo;
     }
 
     @Override
@@ -236,4 +252,18 @@ public class OrderServiceImpl implements OrderService {
         return MessageFormat.format("{0}://{1}:{2}/static/images/{3}.png", request.getScheme(), SERVER_NAME, String.valueOf(request.getServerPort()), orderNo);
     }
 
+    @Override
+    public void pay(String orderNo) {
+        Order order = orderMapper.selectByOrderNo(orderNo);
+        if (order == null) {
+            throw new BussinessException(ExceptionEnum.ORDER_DOES_NOT_EXIST);
+        }
+        if (order.getOrderStatus() != Constant.OrderStatusEnum.UNPAID.getCode()) {
+            throw new BussinessException(ExceptionEnum.ORDER_STATUS_DOES_NOT_MATCH);
+        } else {
+            order.setOrderStatus(Constant.OrderStatusEnum.PAID.getCode());
+            order.setPayTime(new Date());
+            orderMapper.updateByPrimaryKeySelective(order);
+        }
+    }
 }

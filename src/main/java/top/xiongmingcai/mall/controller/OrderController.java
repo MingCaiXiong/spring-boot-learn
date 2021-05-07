@@ -43,15 +43,22 @@ public class OrderController {
                                      @RequestParam(defaultValue = "10") Integer pageSize,
                                      @ApiIgnore HttpSession session) {
         User loginUser = (User) session.getAttribute(Constant.loginUser);
-        PageInfo orderVo = orderService.pagingQuery(loginUser.getId(), pageNum, pageSize);
+        PageInfo orderVo = orderService.findOneOrders(loginUser.getId(), pageNum, pageSize);
         return ApiRestResponse.success(orderVo);
     }
+
 
     @PutMapping("/order/{orderNo}")
     public ApiRestResponse cancelOrders(@PathVariable("orderNo") String orderNo,
                                         @ApiIgnore HttpSession session) {
         User loginUser = (User) session.getAttribute(Constant.loginUser);
         orderService.cancelOrders(orderNo, loginUser.getId());
+        return ApiRestResponse.success();
+    }
+
+    @PutMapping("/pay/{orderNo}")
+    public ApiRestResponse pay(@PathVariable("orderNo") String orderNo) {
+        orderService.pay(orderNo);
         return ApiRestResponse.success();
     }
 

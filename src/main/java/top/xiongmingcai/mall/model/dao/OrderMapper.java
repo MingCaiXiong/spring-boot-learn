@@ -18,6 +18,8 @@ public interface OrderMapper {
 
     List<Order> selectByUserIdOrderByCreateTimeDesc(Integer userId);
 
+    List<Order> selectAllOrderByCreateTimeDesc();
+
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);

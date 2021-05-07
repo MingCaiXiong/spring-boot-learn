@@ -20,10 +20,14 @@ public interface OrderService {
 
     OrderVo orderInfo(String orderNo, Integer userId);
 
-    PageInfo pagingQuery(Integer userId, Integer pageNum, Integer pageSize);
+    PageInfo findOneOrders(Integer userId, Integer pageNum, Integer pageSize);
+
+    PageInfo findAllOrdersForAdmin(Integer id, Integer pageNum, Integer pageSize);
 
     void cancelOrders(String orderNo, Integer id);
 
 
     String qrcode(String orderNo, Integer userId) throws IOException, WriterException;
+
+    void pay(String orderNo);
 }
