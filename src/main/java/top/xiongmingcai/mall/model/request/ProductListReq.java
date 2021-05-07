@@ -36,4 +36,13 @@ public class ProductListReq {
     public void setOrderBy(String orderBy) {
         this.orderBy = orderBy;
     }
+
+    @Override
+    public String toString() {
+        return "ProductListReq{" +
+                "keyWord='" + keyWord + '\'' +
+                ", categoryId=" + categoryId +
+                ", orderBy='" + orderBy + '\'' +
+                '}';
+    }
 }

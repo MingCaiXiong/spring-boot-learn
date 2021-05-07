@@ -57,4 +57,15 @@ public class CategoryReq {
     public void setOrderNum(Integer orderNum) {
         this.orderNum = orderNum;
     }
+
+    @Override
+    public String toString() {
+        return "CategoryReq{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", parentId=" + parentId +
+                ", orderNum=" + orderNum +
+                '}';
+    }
 }
