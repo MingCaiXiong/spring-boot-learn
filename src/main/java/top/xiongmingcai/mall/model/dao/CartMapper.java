@@ -1,11 +1,13 @@
 package top.xiongmingcai.mall.model.dao;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import top.xiongmingcai.mall.model.pojo.Cart;
 import top.xiongmingcai.mall.model.vo.CartVo;
 
 import java.util.List;
 
+@Mapper
 public interface CartMapper {
     int deleteByPrimaryKey(Integer id);
 

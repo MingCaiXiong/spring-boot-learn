@@ -1,9 +1,10 @@
 package top.xiongmingcai.mall.model.dao;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import top.xiongmingcai.mall.model.pojo.User;
 
-//@Mapper //在接口类上添加了@Mapper，在编译之后会生成相应的接口实现类
+@Mapper
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 

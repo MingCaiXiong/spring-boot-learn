@@ -1,9 +1,11 @@
 package top.xiongmingcai.mall.model.dao;
 
+import org.apache.ibatis.annotations.Mapper;
 import top.xiongmingcai.mall.model.pojo.OrderItem;
 
 import java.util.List;
 
+@Mapper
 public interface OrderItemMapper {
     int deleteByPrimaryKey(Integer id);
 
