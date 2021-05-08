@@ -3,6 +3,7 @@ package top.xiongmingcai.mall.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ClassUtils;
@@ -19,7 +20,6 @@ import top.xiongmingcai.mall.model.vo.CategoryVo;
 import top.xiongmingcai.mall.service.CategoryService;
 import top.xiongmingcai.mall.service.ProductService;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -30,9 +30,9 @@ import java.util.*;
 public class ProductServiceimp implements ProductService {
     @Value("${file.upload.dir}")
     private String FILE_UPLOAD_DIR;
-    @Resource
+    @Autowired
     private ProductMapper productMapper;
-    @Resource
+    @Autowired
     private CategoryService categoryService;
 
     @Override

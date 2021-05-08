@@ -1,10 +1,10 @@
 package top.xiongmingcai.mall.filter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import top.xiongmingcai.mall.common.Constant;
 import top.xiongmingcai.mall.model.pojo.User;
 import top.xiongmingcai.mall.service.UserService;
 
-import javax.annotation.Resource;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class AdminFilter implements Filter {
-    @Resource
+    @Autowired
     private UserService userService;
 
     @Override

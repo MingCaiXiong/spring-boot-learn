@@ -1,5 +1,6 @@
 package top.xiongmingcai.mall.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,16 +15,15 @@ import top.xiongmingcai.mall.model.vo.CategoryVo;
 import top.xiongmingcai.mall.service.CategoryService;
 import top.xiongmingcai.mall.service.UserService;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 public class UserController {
-    @Resource
+    @Autowired
     private UserService userService;
-    @Resource
+    @Autowired
     private CategoryService categoryService;
 
 

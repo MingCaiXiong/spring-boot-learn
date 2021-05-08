@@ -1,5 +1,6 @@
 package top.xiongmingcai.mall.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.xiongmingcai.mall.common.Constant;
 import top.xiongmingcai.mall.exception.BussinessException;
@@ -11,7 +12,6 @@ import top.xiongmingcai.mall.model.pojo.Product;
 import top.xiongmingcai.mall.model.vo.CartVo;
 import top.xiongmingcai.mall.service.CartService;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -19,9 +19,9 @@ import java.util.List;
  */
 @Service
 public class CartServiceImp implements CartService {
-    @Resource
+    @Autowired
     private ProductMapper productMapper;
-    @Resource
+    @Autowired
     private CartMapper cartMapper;
 
     @Override
