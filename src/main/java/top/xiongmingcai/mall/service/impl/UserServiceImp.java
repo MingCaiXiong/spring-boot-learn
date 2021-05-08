@@ -1,5 +1,6 @@
 package top.xiongmingcai.mall.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.xiongmingcai.mall.common.Constant;
 import top.xiongmingcai.mall.exception.BussinessException;
@@ -9,13 +10,12 @@ import top.xiongmingcai.mall.model.pojo.User;
 import top.xiongmingcai.mall.service.UserService;
 import top.xiongmingcai.mall.util.MD5Utils;
 
-import javax.annotation.Resource;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 @Service
 public class UserServiceImp implements UserService {
-    @Resource
+    @Autowired
     private UserMapper userMapper;
 
 

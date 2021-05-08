@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.google.zxing.WriterException;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +33,6 @@ import top.xiongmingcai.mall.service.UserService;
 import top.xiongmingcai.mall.util.OrderIdUtils;
 import top.xiongmingcai.mall.util.QRCodeUtils;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -53,22 +53,22 @@ import static top.xiongmingcai.mall.common.Constant.selected.CHECKED;
 @Service
 
 public class OrderServiceImpl implements OrderService {
-    @Resource
+    @Autowired
     private CartService cartService;
 
-    @Resource
+    @Autowired
     private ProductMapper productMapper;
 
-    @Resource
+    @Autowired
     private CartMapper cartMapper;
 
-    @Resource
+    @Autowired
     private OrderMapper orderMapper;
 
-    @Resource
+    @Autowired
     private UserService userService;
 
-    @Resource
+    @Autowired
     private OrderItemMapper orderItemMapper;
 
     @Value("${file.upload.ip}")

@@ -2,6 +2,7 @@ package top.xiongmingcai.mall.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import top.xiongmingcai.mall.exception.BussinessException;
@@ -12,13 +13,12 @@ import top.xiongmingcai.mall.model.request.CategoryReq;
 import top.xiongmingcai.mall.model.vo.CategoryVo;
 import top.xiongmingcai.mall.service.CategoryService;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class CategoryServiceImp implements CategoryService {
-    @Resource
+    @Autowired
     private CategoryMapper categoryMapper;
 
     @Override
