@@ -9,20 +9,14 @@ import javax.servlet.Filter;
 
 @Configuration
 public class AdminFilterConfig {
-    //之前定义的将被拦截的类
-    @Bean
-    public AdminFilter adminFilter() {
-        return new AdminFilter();
-    }
 
     //将过滤器发到链路中
     @Bean(name = "AdminFilterConf")
     public FilterRegistrationBean<Filter> adminFilterConfig() {
         FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
-        registration.setFilter(adminFilter());
+        registration.setFilter(new AdminFilter());
         registration.addUrlPatterns("/admin/*");
 
-        registration.addInitParameter("exclusions", "api/demand/gettypelist");
 
         registration.setName("AdminFilterConf");
         return registration;

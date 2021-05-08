@@ -1,7 +1,6 @@
 package top.xiongmingcai.mall.filter;
 
 
-import org.springframework.stereotype.Component;
 import top.xiongmingcai.mall.common.Constant;
 import top.xiongmingcai.mall.model.pojo.User;
 
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@Component
 public class UserFilter implements Filter {
 
 

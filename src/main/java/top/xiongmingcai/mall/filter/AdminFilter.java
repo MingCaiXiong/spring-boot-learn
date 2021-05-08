@@ -18,7 +18,7 @@ public class AdminFilter implements Filter {
     private UserService userService;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 
@@ -33,7 +33,7 @@ public class AdminFilter implements Filter {
             PrintWriter out = new HttpServletResponseWrapper(
                     (HttpServletResponse) servletResponse).getWriter();
             out.write("{\n"
-                    + "    \"status\": 10007,\n"
+                    + "    \"status\": 10008,\n"
                     + "    \"msg\": \"NEED_LOGIN\",\n"
                     + "    \"data\": null\n"
                     + "}");

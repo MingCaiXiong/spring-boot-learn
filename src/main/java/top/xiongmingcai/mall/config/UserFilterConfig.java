@@ -8,13 +8,14 @@ import top.xiongmingcai.mall.filter.UserFilter;
 @Configuration
 public class UserFilterConfig {
 
+
     @Bean
-    public FilterRegistrationBean<UserFilter> perfFilter() {
-        FilterRegistrationBean<UserFilter> registration = new FilterRegistrationBean<>();
+    public FilterRegistrationBean filterRegistrationBean() {
+        FilterRegistrationBean registration = new FilterRegistrationBean<>();
         registration.setFilter(new UserFilter());
         registration.addUrlPatterns("/cart/*");
-        registration.addUrlPatterns("/order/*");
-        registration.addUrlPatterns("/orders");
+//        registration.addInitParameter("exclusions", "api/demand/gettypelist");
+        registration.setName("UserFilterConf");
         return registration;
     }
 }
