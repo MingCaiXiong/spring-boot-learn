@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.xiongmingcai.mall.common.ApiRestResponse;
@@ -16,6 +15,7 @@ import top.xiongmingcai.mall.model.request.UpdateProductReq;
 import top.xiongmingcai.mall.service.ProductService;
 import top.xiongmingcai.mall.util.NullAwareBeanUtilsBean;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
@@ -26,7 +26,7 @@ import java.util.Date;
 @RestControllerAdvice
 @RequestMapping("/admin")
 public class ProductController {
-    @Autowired
+    @Resource
     private ProductService productService;
     private BeanUtilsBean notNull = new NullAwareBeanUtilsBean();
 

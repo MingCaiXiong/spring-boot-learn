@@ -2,7 +2,6 @@ package top.xiongmingcai.mall.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.google.zxing.WriterException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 import top.xiongmingcai.mall.common.ApiRestResponse;
@@ -12,6 +11,7 @@ import top.xiongmingcai.mall.model.request.CreateOrderReq;
 import top.xiongmingcai.mall.model.vo.OrderVo;
 import top.xiongmingcai.mall.service.OrderService;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping
 public class OrderController {
-    @Autowired
+    @Resource
     private OrderService orderService;
 
     @PostMapping("/order")

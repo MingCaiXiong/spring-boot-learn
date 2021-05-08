@@ -2,7 +2,6 @@ package top.xiongmingcai.mall.controller;
 
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 import top.xiongmingcai.mall.common.ApiRestResponse;
@@ -14,6 +13,7 @@ import top.xiongmingcai.mall.model.request.CategoryReq;
 import top.xiongmingcai.mall.service.CategoryService;
 import top.xiongmingcai.mall.service.UserService;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -21,9 +21,9 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/admin")
 public class CategoryController {
-    @Autowired
+    @Resource
     private UserService userService;
-    @Autowired
+    @Resource
     private CategoryService categoryService;
 
     @GetMapping("/category/{categoryId}")

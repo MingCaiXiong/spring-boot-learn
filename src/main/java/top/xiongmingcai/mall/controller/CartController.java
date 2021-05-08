@@ -1,7 +1,6 @@
 package top.xiongmingcai.mall.controller;
 
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 import top.xiongmingcai.mall.common.ApiRestResponse;
@@ -9,6 +8,7 @@ import top.xiongmingcai.mall.model.pojo.User;
 import top.xiongmingcai.mall.model.vo.CartVo;
 import top.xiongmingcai.mall.service.CartService;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -20,7 +20,7 @@ import static top.xiongmingcai.mall.common.Constant.loginUser;
 @RestController
 @RequestMapping("/cart")
 public class CartController {
-    @Autowired
+    @Resource
     private CartService cartService;
 
 
