@@ -1,0 +1,32 @@
+logging:
+  level:
+    com:
+      shop: debug
+
+
+mybatis:
+  mapper-locations: classpath:mappers/*Mapper.xml
+
+
+server:
+  port: 8080
+
+
+spring:
+  application:
+    name: mall
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: Root_21root
+    url: jdbc:mysql://103.99.179.83:3306/imooc_mall
+    username: root
+  redis:
+    host: localhost
+    password: ''
+    port: 6379
+
+
+file:
+  upload:
+    dir: /root/static
+    ip: 103.99.179.83
